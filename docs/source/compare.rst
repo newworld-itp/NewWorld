@@ -1,4 +1,4 @@
-Usage
+Compare
 =====
 
 .. _installation:

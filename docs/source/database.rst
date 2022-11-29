@@ -1,4 +1,4 @@
-Usage
+Database
 =====
 
 .. _installation:

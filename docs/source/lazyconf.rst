@@ -1,4 +1,4 @@
-Usage
+Lazy Conf
 =====
 
 .. _installation:

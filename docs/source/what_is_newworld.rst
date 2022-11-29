@@ -1,4 +1,4 @@
-Usage
+What is NewWorld?
 =====
 
 .. _installation:
