@@ -4,11 +4,11 @@ Database
 
 .. _installation:
 
-Tabellen
---------
 
 .. image:: newworld.png
 
+Tabellen
+--------
 
 VLAN
 ^^^^
@@ -17,7 +17,8 @@ VLAN
 
 - ``pk_vlan_id`` - ID des VLANs
 
-**Trunking**
+Trunking
+^^^^^^^^
 
 - ``fk_interface_id`` - Interface auf welchem ein VLAN getrunked wird; Pointed auf Interface(pk_interface_id)
 
