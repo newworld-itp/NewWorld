@@ -23,7 +23,14 @@ find_switch_id
         row = rows[0]
         switch_id = row[0]
         return switch_id
-        
+
+``sql_query`` ist das SQL-Statement welches ausgeführt wird.
+Hierbei wollen wir die ID von dem Switch mit einem bestimmten Hostname.
+Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt und mit
+``db_curser.fetchall()`` wird die Ergebnis-Tabelle returned.
+Zuletzt wird dann die Switch-ID, welche sich in ``rows`` befindet
+mit einem ``return`` weitergegeben
+
         
 compare_vlans
 `````````````````````````````
@@ -129,48 +136,48 @@ compare_port_security
 
 .. code-block:: python
 
-def compare_port_security(switch_id: int, port_security_from_file: dict, db_cursor: sqlite3.dbapi2.Cursor):
-    """
-    Compare the port security information of a switch with the port security in the file
-    :param switch_id: the switch_id of the switch
-    :param port_security_from_file: the port security from the file
-    :param db_cursor: the cursor of the database
-    :return: the errors
-    """
-    sql_query = "SELECT int_name, fk_access_vlan_id, allowed_mac FROM Interface " \
-                f"WHERE fk_switch_id = {switch_id} AND has_security = TRUE"
+    def compare_port_security(switch_id: int, port_security_from_file: dict, db_cursor: sqlite3.dbapi2.Cursor):
+        """
+        Compare the port security information of a switch with the port security in the file
+        :param switch_id: the switch_id of the switch
+        :param port_security_from_file: the port security from the file
+        :param db_cursor: the cursor of the database
+        :return: the errors
+        """
+        sql_query = "SELECT int_name, fk_access_vlan_id, allowed_mac FROM Interface " \
+                    f"WHERE fk_switch_id = {switch_id} AND has_security = TRUE"
 
-    db_cursor.execute(sql_query)
-    rows = db_cursor.fetchall()
-    list_from_db = [(row[0], (str(row[1]), row[2])) for row in rows]  # 0=int_name, 1=vlan_id as int, 2=allowed_mac
-    list_from_db.sort()
+        db_cursor.execute(sql_query)
+        rows = db_cursor.fetchall()
+        list_from_db = [(row[0], (str(row[1]), row[2])) for row in rows]  # 0=int_name, 1=vlan_id as int, 2=allowed_mac
+        list_from_db.sort()
 
-    port_security_from_db = dict(list_from_db)
+        port_security_from_db = dict(list_from_db)
 
-    only_in_db = port_security_from_db.keys() - port_security_from_file.keys()
-    only_in_file = port_security_from_file.keys() - port_security_from_db.keys()
-    in_both = port_security_from_file.keys() & port_security_from_db.keys()
+        only_in_db = port_security_from_db.keys() - port_security_from_file.keys()
+        only_in_file = port_security_from_file.keys() - port_security_from_db.keys()
+        in_both = port_security_from_file.keys() & port_security_from_db.keys()
 
-    errors = [f"Port_Security am {interface} ist in der DB aktiviert, aber nicht in der File" for interface in
-              only_in_db]
-    errors += [f"Port_Security am {interface} ist in der File aktiviert, aber nicht in der DB" for interface in
-               only_in_file]
+        errors = [f"Port_Security am {interface} ist in der DB aktiviert, aber nicht in der File" for interface in
+                  only_in_db]
+        errors += [f"Port_Security am {interface} ist in der File aktiviert, aber nicht in der DB" for interface in
+                   only_in_file]
 
-    for interface in in_both:
-        err = f"Port_Security am {interface} ist in der File und der DB aktiviert, aber"
-        error_occurred = False
-        if port_security_from_file[interface][0] != port_security_from_db[interface][0]:
-            err += f" das VLAN ist falsch. DB-Wert: {port_security_from_db[interface][0]}, " \
-                   f"File-Wert: {port_security_from_file[interface][0]}"
-            error_occurred = True
-        if port_security_from_file[interface][1] != port_security_from_db[interface][1]:
-            err += f" die MAC-Adresse ist falsch. DB-Wert: {port_security_from_db[interface][1]}, " \
-                   f"File-Wert: {port_security_from_file[interface][1]}"
-            error_occurred = True
-        if error_occurred:
-            errors.append(err)
+        for interface in in_both:
+            err = f"Port_Security am {interface} ist in der File und der DB aktiviert, aber"
+            error_occurred = False
+            if port_security_from_file[interface][0] != port_security_from_db[interface][0]:
+                err += f" das VLAN ist falsch. DB-Wert: {port_security_from_db[interface][0]}, " \
+                       f"File-Wert: {port_security_from_file[interface][0]}"
+                error_occurred = True
+            if port_security_from_file[interface][1] != port_security_from_db[interface][1]:
+                err += f" die MAC-Adresse ist falsch. DB-Wert: {port_security_from_db[interface][1]}, " \
+                       f"File-Wert: {port_security_from_file[interface][1]}"
+                error_occurred = True
+            if error_occurred:
+                errors.append(err)
 
-    return errors
+        return errors
     
     
 compare_interface_descriptions
