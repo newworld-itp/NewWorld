@@ -3,340 +3,264 @@ Compare
 
 .. _compare:
 
-parse_vlan
+in db_calls.py
+
+find_switch_id
 `````````````````````````````
-
-Input file
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: json
-
-    [
-        {
-            "name": "default",
-            "vlan_id": 1,
-            "state": "active",
-            "shutdown": "disabled",
-            "mtu": 1500
-        },
-        {
-            "name": "VLAN0020",
-            "vlan_id": 20,
-            "state": "active",
-            "shutdown": "disabled",
-            "mtu": 1500
-        },
-        {
-            "name": "vlan30test",
-            "vlan_id": 30,
-            "state": "active",
-            "shutdown": "disabled",
-            "mtu": 1500
-        },
-        {
-            "name": "ARTHUR",
-            "vlan_id": 42,
-            "state": "active",
-            "shutdown": "disabled",
-            "mtu": 1500
-        },
-        {
-            "name": "VLAN0085",
-            "vlan_id": 85,
-            "state": "active",
-            "shutdown": "disabled",
-            "mtu": 1500
-        },
-        {
-            "name": "Arthur",
-            "vlan_id": 260,
-            "state": "active",
-            "shutdown": "disabled",
-            "mtu": 1500
-        },
-        {
-            "name": "marc",
-            "vlan_id": 261,
-            "state": "active",
-            "shutdown": "disabled",
-            "mtu": 1500
-        },
-        {
-            "name": "fddi-default",
-            "vlan_id": 1002,
-            "state": "active",
-            "shutdown": "enabled",
-            "mtu": 1500
-        },
-        {
-            "name": "token-ring-default",
-            "vlan_id": 1003,
-            "state": "active",
-            "shutdown": "enabled",
-            "mtu": 1500
-        },
-        {
-            "name": "fddinet-default",
-            "vlan_id": 1004,
-            "state": "active",
-            "shutdown": "enabled",
-            "mtu": 1500
-        },
-        {
-            "name": "trnet-default",
-            "vlan_id": 1005,
-            "state": "active",
-            "shutdown": "enabled",
-            "mtu": 1500
-        }
-    ]
-
-Method
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
-    def parse_vlan(path_to_vlan_json_file: str):
+    def find_switch_id(hostname: str, db_cursor: sqlite3.dbapi2.Cursor):
         """
-        Parses the vlan-data.json file and returns a dictionary with the vlan id as key and the vlan name as value
-        :param path_to_vlan_json_file: the path to the vlan-data.json file
-        :return: a dictionary with the vlan id as key and the vlan name as value
+        Find the switch_id of a switch with the given hostname
+        :param hostname: the hostname of the switch
+        :param db_cursor: the cursor of the database
+        :return: the switch_id of the switch
         """
-        erg = {}
-        data = json.load(open(path_to_vlan_json_file, "r"))
-        for line in data:
-            erg[line["vlan_id"]] = line["name"]
-        return erg
-
-
-parse_interface_descriptions
-`````````````````````````````
-
-Input file
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: text
-
-    Interface                      Status         Protocol Description
-    Gi0/0                          up             up       to_Catalyst6880X_078
-    Gi0/1                          up             up       to_Nexus7000_078
-    Gi0/2                          down           down
-    Gi0/3                          down           down
-    Gi1/0                          down           down
-    Gi1/1                          down           down
-    Gi1/2                          down           down
-    Gi1/3                          down           down
-    Gi2/0                          down           down
-    Gi2/1                          down           down
-    Gi2/2                          down           down
-    Gi2/3                          down           down
-    Vl1                            up             up
-
-
-Method
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: python
-
-    def parse_interface_descriptions(path_to_interface_descriptions_file: str):
-        """
-        Parses the interface-descriptions.txt file and returns a dictionary with the interface name as key and a list
-        consisting of status, protocol and description as value
-        :param path_to_interface_descriptions_file: the path to the interface-descriptions.txt file
-        :return: a dictionary with the interface name as key and a list consisting of status, protocol and description as
-        value
-        """
-        erg = {}
-        with open(path_to_interface_descriptions_file, "r") as file:
-            for line in file.readlines()[1:]:
-                values = line.split()
-                interface = values[0]
-                status = -1 if values[1].startswith("admin") else 0 if values[1] == "down" else 1
-                protocol = 1 if values[3 if status == -1 else 2] == "up" else 0
-                description = values[4 if status == -1 else 3] if len(values) == (5 if status == -1 else 4) else None
-                erg[interface] = [status, protocol, description]
-        return erg
-
-
-parse_interfaces
-`````````````````````````````
-
-Input file
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: json
-
-    [
-        {
-            "name": "GigabitEthernet0/0"
-        },
-        {
-            "name": "GigabitEthernet0/1"
-        },
-        {
-            "name": "GigabitEthernet0/2",
-            "mode": "access",
-            "access": {
-                "vlan": 20
-            },
-            "voice": {
-                "vlan": 30
-            }
-        },
-        {
-            "name": "GigabitEthernet0/3",
-            "mode": "trunk",
-            "trunk": {
-                "encapsulation": "dot1q",
-                "allowed_vlans": [
-                    "10",
-                    "20",
-                    "30"
-                ]
-            }
-        },
-        {
-            "name": "GigabitEthernet1/0"
-        },
-        {
-            "name": "GigabitEthernet1/1"
-        },
-        {
-            "name": "GigabitEthernet1/2"
-        },
-        {
-            "name": "GigabitEthernet1/3"
-        },
-        {
-            "name": "GigabitEthernet2/0"
-        },
-        {
-            "name": "GigabitEthernet2/1"
-        },
-        {
-            "name": "GigabitEthernet2/2"
-        },
-        {
-            "name": "GigabitEthernet2/3"
-        },
-        {
-            "name": "GigabitEthernet3/0"
-        },
-        {
-            "name": "GigabitEthernet3/1"
-        },
-        {
-            "name": "GigabitEthernet3/2"
-        },
-        {
-            "name": "GigabitEthernet3/3"
-        }
-    ]
-
-Method
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: python
-
-    def parse_interfaces(path_to_l2_interface_file: str):
-        """
-        Parses the l2-interface.txt file and returns a dictionary with the interface name as key and a list consisting of
-        access vlan, voice vlan and allowed trunk vlans
-        :param path_to_l2_interface_file: the path to the l2-interface.txt file
-        :return: a dictionary with the interface name as key and a list consisting of access vlan, voice vlan and allowed
-        trunk vlans
-        """
-        erg = {}
-        data = json.load(open(path_to_l2_interface_file, "r"))
-        for line in data:
-            name = line["name"][:2] + line["name"][-3:]
-            access = line["access"]["vlan"] if "access" in line else None
-            voice = line["voice"]["vlan"] if "voice" in line else None
-            trunk = line["trunk"]["allowed_vlans"] if "trunk" in line else []
-            trunk.sort()
-            erg[name] = [access, voice, trunk]
-        return erg
-
-
-parse_port_security
-`````````````````````````````
-
-Input file
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: text
-
-                   Secure Mac Address Table
-    -----------------------------------------------------------------------------
-    Vlan    Mac Address       Type                          Ports   Remaining Age
-                                                                       (mins)
-    ----    -----------       ----                          -----   -------------
-      10    cafe.cafe.cafe    SecureConfigured              Gi0/2        -
-      20    1234.5678.9abc    SecureConfigured              Gi0/3        -
-    -----------------------------------------------------------------------------
-    Total Addresses in System (excluding one mac per port)     : 0
-    Max Addresses limit in System (excluding one mac per port) : 4096
-
-Method
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: python
-
-    def parse_port_security(path_to_port_security_file: str):
-        """
-        Parses the port-security.txt file and returns a dictionary with the interface name as key and a list consisting of
-        access vlan and the allowed mac address
-        :param path_to_port_security_file: the path to the port-security.txt file
-        :return: a dictionary with the interface name as key and a list consisting of access vlan and the allowed mac
-        """
-        erg = {}
-        with open(path_to_port_security_file, "r") as file:
-            for line in file.readlines()[5:-3]:
-                values = line.split()
-                vlan = values[0]
-                mac_address = values[1]
-                ports = values[3]
-                erg[ports] = [vlan, mac_address]
-        return erg
+        sql_query = f"SELECT pk_switch_id FROM Switch WHERE hostname = '{hostname}'"
+        db_cursor.execute(sql_query)
+        rows = db_cursor.fetchall()
+        row = rows[0]
+        switch_id = row[0]
+        return switch_id
         
-
-parse_cdp
+        
+compare_vlans
 `````````````````````````````
-
-Input file
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: text
-
-    Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
-                      S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone,
-                      D - Remote, C - CVTA, M - Two-port Mac Relay
-
-    Device ID        Local Intrfce     Holdtme    Capability  Platform  Port ID
-    SW1.test.com     Gig 0/1           170             R S I            Gig 0/1
-
-    Total cdp entries displayed : 1
-
-
-Method
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
-    def parse_cdp(path_to_cdp_file: str):
+    def compare_vlans(switch_id: int, vlans_from_file: dict, db_cursor: sqlite3.dbapi2.Cursor):
         """
-        Parses the cdp.txt file and returns a dictionary with the local interface name as key and a tuple consisting of
-        the cdp neighbor and the remote interface name
-        :param path_to_cdp_file: the path to the cdp.txt file
-        :return: a dictionary with the local interface name as key and a list consisting of the cdp neighbor and the
-        remote interface name
+        Compare the vlan information of a switch with the vlan information in the file
+        :param switch_id: the switch_id of the switch
+        :param vlans_from_file: the vlan information from the file
+        :param db_cursor: the cursor of the database
+        :return: the errors
         """
-        erg = {}
-        with open(path_to_cdp_file, "r") as file:
-            for line in file.readlines()[5:-2]:
-                arr = line.split("  ")
-                neighbor = arr[0]
-                local_interface = arr[7][:2] + arr[7][-3:]
-                remote_interface = arr[-1].strip()[:2] + arr[-1].strip()[-3:]
-                erg[local_interface] = [neighbor, remote_interface]
-        return erg
+        sql_query = "SELECT fk_vlan_id, name FROM Switch_VLAN JOIN VLAN ON pk_vlan_id = fk_vlan_id " + \
+                    f"WHERE fk_switch_id = {switch_id} UNION SELECT fK_voice_vlan_id, name FROM Interface " + \
+                    "JOIN Switch_VLAN SV on Interface.fk_switch_id = SV.fk_switch_id " + \
+                    "JOIN VLAN V on V.pk_vlan_id = fK_voice_vlan_id " + \
+                    f"WHERE SV.fk_switch_id = {switch_id};"
+
+        db_cursor.execute(sql_query)
+        rows = db_cursor.fetchall()
+
+        vlans_from_db = dict(rows)
+
+        only_in_db = vlans_from_db.keys() - vlans_from_file.keys()
+        only_in_file = vlans_from_file.keys() - vlans_from_db.keys()
+        in_both = vlans_from_file.keys() & vlans_from_db.keys()
+
+        errors = [f"VLAN {vlan} ist in der DB aber nicht in der File" for vlan in only_in_db]
+        errors += [f"VLAN {vlan} ist in der File aber nicht in der DB" for vlan in only_in_file]
+
+        errors += [
+            f"VLAN {vlan} ist in File und DB, aber der Name ist falsch. DB-Wert: {vlans_from_db[vlan]}, " +
+            f"File-Wert: {vlans_from_file[vlan]}"
+            for vlan in in_both if vlans_from_db[vlan] != vlans_from_file[vlan]]
+        return errors
+        
+compare_interfaces
+`````````````````````````````
+
+.. code-block:: python
+    
+    def compare_interfaces(switch_id: int, interfaces_from_file: dict, db_cursor: sqlite3.dbapi2.Cursor):
+    """
+    Compare the interface information of a switch with the interfaces in the file
+    :param switch_id: the switch_id of the switch
+    :param interfaces_from_file: the interfaces from the file
+    :param db_cursor: the cursor of the database
+    :return: the errors
+    """
+    sql_query = "SELECT int_name, pk_interface_id, fk_access_vlan_id, fk_voice_vlan_id FROM Interface " \
+                f"WHERE fk_switch_id = {switch_id}"
+
+    db_cursor.execute(sql_query)
+    rows = db_cursor.fetchall()
+
+    errors = []
+
+    for row in rows:
+        row = list(row)
+
+        interface = row[0]
+        interface_id = row[1]
+        values = row[2:]
+
+        sql_query = "SELECT fk_allowed_vlan_id FROM Trunking " + \
+                    f"WHERE fk_interface_id = {interface_id}"
+
+        db_cursor.execute(sql_query)
+        trunked_vlans = [str(entry[0]) for entry in db_cursor.fetchall()]
+        trunked_vlans.sort()
+
+        if row[0] in interfaces_from_file:
+            err = f"Interface: {interface} ist in der DB und File, aber"
+            error_occurred = False
+
+            if values[0] != interfaces_from_file[interface][0]:
+                err += f" das Access_Vlan ist falsch. DB-Wert: {values[0]}, " \
+                       f"File-Wert: {interfaces_from_file[interface][0]}"
+                error_occurred = True
+            if values[1] != interfaces_from_file[interface][1]:
+                err += f" das Voice_Vlan ist falsch. DB-Wert: {values[1]}, " \
+                       f"File-Wert: {interfaces_from_file[interface][1]}"
+                error_occurred = True
+            if trunked_vlans != interfaces_from_file[interface][2]:
+                err += f" die Allowed_Trunk_Vlans sind falsch. DB-Wert: {trunked_vlans}, " \
+                       f"File-Wert: {interfaces_from_file[interface][2]}"
+                error_occurred = True
+            if error_occurred:
+                errors.append(err)
+            del interfaces_from_file[interface]
+        else:
+            errors.append(f"Interface: {interface} ist in der Datenbank aber nicht in der File")
+
+    errors += [f"Interface {interface} ist in der File aber nicht in der DB" for interface in
+               interfaces_from_file.keys()]
+    return errors
+    
+    
+compare_port_security
+`````````````````````````````
+
+.. code-block:: python
+
+def compare_port_security(switch_id: int, port_security_from_file: dict, db_cursor: sqlite3.dbapi2.Cursor):
+    """
+    Compare the port security information of a switch with the port security in the file
+    :param switch_id: the switch_id of the switch
+    :param port_security_from_file: the port security from the file
+    :param db_cursor: the cursor of the database
+    :return: the errors
+    """
+    sql_query = "SELECT int_name, fk_access_vlan_id, allowed_mac FROM Interface " \
+                f"WHERE fk_switch_id = {switch_id} AND has_security = TRUE"
+
+    db_cursor.execute(sql_query)
+    rows = db_cursor.fetchall()
+    list_from_db = [(row[0], (str(row[1]), row[2])) for row in rows]  # 0=int_name, 1=vlan_id as int, 2=allowed_mac
+    list_from_db.sort()
+
+    port_security_from_db = dict(list_from_db)
+
+    only_in_db = port_security_from_db.keys() - port_security_from_file.keys()
+    only_in_file = port_security_from_file.keys() - port_security_from_db.keys()
+    in_both = port_security_from_file.keys() & port_security_from_db.keys()
+
+    errors = [f"Port_Security am {interface} ist in der DB aktiviert, aber nicht in der File" for interface in
+              only_in_db]
+    errors += [f"Port_Security am {interface} ist in der File aktiviert, aber nicht in der DB" for interface in
+               only_in_file]
+
+    for interface in in_both:
+        err = f"Port_Security am {interface} ist in der File und der DB aktiviert, aber"
+        error_occurred = False
+        if port_security_from_file[interface][0] != port_security_from_db[interface][0]:
+            err += f" das VLAN ist falsch. DB-Wert: {port_security_from_db[interface][0]}, " \
+                   f"File-Wert: {port_security_from_file[interface][0]}"
+            error_occurred = True
+        if port_security_from_file[interface][1] != port_security_from_db[interface][1]:
+            err += f" die MAC-Adresse ist falsch. DB-Wert: {port_security_from_db[interface][1]}, " \
+                   f"File-Wert: {port_security_from_file[interface][1]}"
+            error_occurred = True
+        if error_occurred:
+            errors.append(err)
+
+    return errors
+    
+    
+compare_interface_descriptions
+`````````````````````````````
+
+.. code-block:: python
+    
+    def compare_interface_descriptions(switch_id: int, int_desc_from_file: dict, db_cursor: sqlite3.dbapi2.Cursor):
+    """
+    Compare the interface description of a switch with the interface descriptions in the file
+    :param switch_id: the switch_id of the switch
+    :param int_desc_from_file: the interface descriptions from the file
+    :param db_cursor: the cursor of the database
+    :return: the errors
+    """
+    sql_query = "SELECT int_name, status, protocol, int_description FROM Interface " \
+                f"WHERE fk_switch_id = {switch_id}"
+
+    db_cursor.execute(sql_query)
+    rows = db_cursor.fetchall()
+    list_from_db = [(row[0], row[1:]) for row in rows]  # 0=int_name, 1=vlan_id as int, 2=allowed_mac
+    list_from_db.sort()
+
+    int_desc_from_db = dict(list_from_db)
+
+    in_both = int_desc_from_file.keys() & int_desc_from_db.keys()
+
+    states = ['down', 'up', 'administratively down']
+    protocols = ['down', 'up']
+
+    errors = []
+    for interface in in_both:
+        if int_desc_from_db[interface][0] != int_desc_from_file[interface][0]:
+            errors.append(
+                f"Am Interface {interface} ist der Status falsch. "
+                f"DB-Wert: {states[int_desc_from_db[interface][0]]}, "
+                f"File-Wert: {states[int_desc_from_file[interface][0]]}")
+        if int_desc_from_db[interface][1] != int_desc_from_file[interface][1]:
+            errors.append(
+                f"Am Interface {interface} ist das Protocol falsch. "
+                f"DB-Wert: {protocols[int_desc_from_db[interface][1]]}, "
+                f"File-Wert: {protocols[int_desc_from_file[interface][1]]}")
+        if int_desc_from_db[interface][2] != int_desc_from_file[interface][2]:
+            errors.append(
+                f"Am Interface {interface} ist die Description falsch. "
+                f"DB-Wert: {int_desc_from_db[interface][2]}, "
+                f"File-Wert: {int_desc_from_file[interface][2]}")
+    return errors
+
+
+    
+compare_cdp
+`````````````````````````````
+
+.. code-block:: python
+
+    def compare_cdp(switch_id: int, cdp_from_file: dict, db_cursor: sqlite3.dbapi2.Cursor):
+        """
+        Compare the cdp information of a switch with the cdp in the file
+        :param switch_id: the switch_id of the switch
+        :param cdp_from_file: the cdp information from the file
+        :param db_cursor: the cursor of the database
+        :return: the errors
+        """
+        sql_query = 'SELECT hostname, int_name, connected_sw_interface ' + \
+                    'FROM Interface ' + \
+                    'JOIN Switch S on connected_switch = pk_switch_id ' + \
+                    f'WHERE fk_switch_id = "{switch_id}";'
+
+        db_cursor.execute(sql_query)
+        rows = db_cursor.fetchall()
+        errors = []
+        for information in rows:
+            neighbor = information[0]
+            local_interface = information[1]
+            remote_interface = information[2]
+            err = f"CDP findet den Nachbarn '{neighbor}' in der File und der DB, aber"
+            error_occurred = False
+
+            if neighbor in cdp_from_file.keys():
+                if local_interface != cdp_from_file[neighbor][0]:
+                    err += f", das lokale Interface ist falsch. DB-Wert: {local_interface}, " \
+                           f"File-Wert: {cdp_from_file[neighbor][0]}"
+                    error_occurred = True
+                if remote_interface != cdp_from_file[neighbor][1]:
+                    err += f", das remote Interface ist falsch. DB-Wert: {remote_interface}, " \
+                           f"File-Wert: {cdp_from_file[neighbor][1]}"
+                    error_occurred = True
+
+                if error_occurred:
+                    errors.append(err)
+                rows.remove(information)
+        return errors
