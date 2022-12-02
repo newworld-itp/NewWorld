@@ -8,11 +8,15 @@ Tabellen
 --------
 
 - VLAN
+
   - name - Name des VLANs
+
   - pk_vlan_id - ID des VLANs
 
 - Trunking
+
   - fk_interface_id - Interface auf welchem ein VLAN getrunked wird; Pointed auf Interface(pk_interface_id)
+
   - fk_vlan_id - VLAN welches auf einem Interface getrunked wird; Pointed auf VLAN(pk_vlan_id)
 
 Interface
