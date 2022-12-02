@@ -11,7 +11,8 @@ Tabellen
 
 
 VLAN
-^
+^^^^
+
 - ``name`` - Name des VLANs
 
 - ``pk_vlan_id`` - ID des VLANs
@@ -23,7 +24,8 @@ VLAN
 - ``fk_allowed_vlan_id`` - VLAN welches auf einem Interface getrunked wird; Pointed auf VLAN(pk_vlan_id)
 
 Interface
-^
+^^^^^^^^^
+
 - ``fk_switch_id`` - ID von dem Switch dem das Inteface gehört; Pointed auf Switch(pk_switch_id)
 
 - ``fk_access_vlan`` - ID von dem VLAN welches als Access VLAN auf dem Interface konfiguriert ist; Pointed auf VLAN(pk_vlan_id)
@@ -48,19 +50,22 @@ Interface
 
 - ``connected_sw_interface`` - Gegenüberliegendes Interface
 
-**Switch_VLAN**
+Switch_VLAN
+^^^^^^^^^^^
 
 - ``fk_switch_id`` - ID von dem Switch auf dem das VLAN vorhanden ist; Pointed auf Switch(pk_switch_id)
 
 - ``fk_vlan_id`` - VLAN welches auf dem Switch vorhanden ist; Pointed auf VLAN(pk_vlan_id)
 
-**Switch**
+Switch
+^^^^^^
 
 - ``pk_switch_id`` - ID von dem Switch
 
 - ``hostname`` - Hostname auf dem Switch
 
-**End_Device**
+End_Device
+^^^^^^^^^^
 
 - ``pk_decive_id`` - ID vom End Gerät
 
@@ -69,7 +74,8 @@ Interface
 Constraints
 -----------
 
-**VLAN(pk_vlan_id)**
+VLAN(pk_vlan_id)
+^^^^^^^^^^^^^^^^
 
 - ``AUTOINCREMENT``
 
@@ -81,7 +87,8 @@ Constraints
 
 - ``ON DELETE SET NULL`` → Interface(fk_voice_vlan_id)
 
-**Switch(pk_switch_id)**
+Switch(pk_switch_id)
+^^^^^^^^^^^^^^^^^^^^
 
 - ``AUTOINCREMENT``
 
@@ -89,14 +96,15 @@ Constraints
 
 - ``ON DELETE CASCADE`` → Interface(fk_switch_id)
 
-**Deivce(pk_device_id)**
+Deivce(pk_device_id)
+^^^^^^^^^^^^^^^^^^^^
 
 - ``AUTOINCREMENT``
 
 - ``ON DELETE SET NULL`` → Interface(fk_device_id)
 
-**Interface(pk_interface_id)**
-
+Interface(pk_interface_id)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 - ``AUTOINCREMENT``
 
 - ``ON DELETE CASCADE`` → Trunking(fk_interface_id)
