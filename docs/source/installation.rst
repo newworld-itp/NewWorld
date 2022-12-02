@@ -3,8 +3,6 @@ Installation
 
 .. _installation:
 
-Nur Django
-------------
 
 Um NewWorld zu installieren muss man zuerst einmal das GitLab Repository clonen
 
@@ -26,9 +24,4 @@ Zu guter Letzt muss man newworld.py starten
 
    gnsave@server $ python3 newworld.py -p <folder_path> <-c/-u>
 
-For example:
-
->>> import lumache
->>> lumache.get_random_ingredients()
-['shells', 'gorgonzola', 'parsley']
 
