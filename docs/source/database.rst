@@ -10,61 +10,61 @@ Database
 
 .. code-block:: sql
 
-CREATE TABLE Switch
-(
-    pk_switch_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    hostname     varchar(20) UNIQUE
-);
+  CREATE TABLE Switch
+  (
+      pk_switch_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      hostname     varchar(20) UNIQUE
+  );
 
-CREATE TABLE VLAN
-(
-    pk_vlan_id INTEGER PRIMARY KEY,
-    name       varchar(20)
-);
+  CREATE TABLE VLAN
+  (
+      pk_vlan_id INTEGER PRIMARY KEY,
+      name       varchar(20)
+  );
 
-CREATE TABLE End_Device
-(
-    pk_device_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    hostname     varchar(20)
-);
+  CREATE TABLE End_Device
+  (
+      pk_device_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      hostname     varchar(20)
+  );
 
-CREATE TABLE Interface
-(
-    pk_interface_id        INTEGER PRIMARY KEY AUTOINCREMENT,
-    fk_switch_id           INTEGER,
-    fk_access_vlan_id      INTEGER,
-    fk_voice_vlan_id       INTEGER,
-    fk_device_id           INTEGER,
-    int_name               varchar(10),
-    int_description        varchar(20),
-    has_security           boolean,
-    allowed_mac            varchar(17),
-    status                 INT, /* -1=admin_down, 0=down, 1=up */
-    protocol               boolean,
-    connected_switch       int,
-    connected_sw_interface varchar(10),
-    CONSTRAINT switch_interface FOREIGN KEY (fk_switch_id) REFERENCES Switch (pk_switch_id) ON DELETE CASCADE,
-    CONSTRAINT vlan_interface FOREIGN KEY (fk_access_vlan_id) REFERENCES VLAN (pk_vlan_id) ON DELETE SET NULL,
-    CONSTRAINT int_device FOREIGN KEY (fk_device_id) REFERENCES End_Device (pk_device_id) ON DELETE SET NULL,
-    CONSTRAINT voice_vlan FOREIGN KEY (fk_voice_vlan_id) REFERENCES VLAN (pk_vlan_id) ON DELETE SET NULL,
-    CONSTRAINT conntected_switch FOREIGN KEY (connected_switch) REFERENCES Switch (pk_switch_id) ON DELETE SET NULL
-);
+  CREATE TABLE Interface
+  (
+      pk_interface_id        INTEGER PRIMARY KEY AUTOINCREMENT,
+      fk_switch_id           INTEGER,
+      fk_access_vlan_id      INTEGER,
+      fk_voice_vlan_id       INTEGER,
+      fk_device_id           INTEGER,
+      int_name               varchar(10),
+      int_description        varchar(20),
+      has_security           boolean,
+      allowed_mac            varchar(17),
+      status                 INT, /* -1=admin_down, 0=down, 1=up */
+      protocol               boolean,
+      connected_switch       int,
+      connected_sw_interface varchar(10),
+      CONSTRAINT switch_interface FOREIGN KEY (fk_switch_id) REFERENCES Switch (pk_switch_id) ON DELETE CASCADE,
+      CONSTRAINT vlan_interface FOREIGN KEY (fk_access_vlan_id) REFERENCES VLAN (pk_vlan_id) ON DELETE SET NULL,
+      CONSTRAINT int_device FOREIGN KEY (fk_device_id) REFERENCES End_Device (pk_device_id) ON DELETE SET NULL,
+      CONSTRAINT voice_vlan FOREIGN KEY (fk_voice_vlan_id) REFERENCES VLAN (pk_vlan_id) ON DELETE SET NULL,
+      CONSTRAINT conntected_switch FOREIGN KEY (connected_switch) REFERENCES Switch (pk_switch_id) ON DELETE SET NULL
+  );
 
-CREATE TABLE Switch_VLAN
-(
-    fk_switch_id INTEGER,
-    fk_vlan_id   INTEGER,
-    CONSTRAINT vlan_switch FOREIGN KEY (fk_switch_id) REFERENCES Switch (pk_switch_id) ON DELETE CASCADE,
-    CONSTRAINT switch_vlan FOREIGN KEY (fk_vlan_id) REFERENCES VLAN (pk_vlan_id) ON DELETE CASCADE
-);
+  CREATE TABLE Switch_VLAN
+  (
+      fk_switch_id INTEGER,
+      fk_vlan_id   INTEGER,
+      CONSTRAINT vlan_switch FOREIGN KEY (fk_switch_id) REFERENCES Switch (pk_switch_id) ON DELETE CASCADE,
+      CONSTRAINT switch_vlan FOREIGN KEY (fk_vlan_id) REFERENCES VLAN (pk_vlan_id) ON DELETE CASCADE
+  );
 
-CREATE TABLE Trunking
-(
-    fk_interface_id    INTEGER,
-    fk_allowed_vlan_id INTEGER,
-    CONSTRAINT trunk_interface FOREIGN KEY (fk_interface_id) REFERENCES Interface (pk_interface_id) ON DELETE CASCADE,
-    CONSTRAINT trunk_vlan FOREIGN KEY (fk_allowed_vlan_id) REFERENCES VLAN (pk_vlan_id) ON DELETE CASCADE
-);
+  CREATE TABLE Trunking
+  (
+      fk_interface_id    INTEGER,
+      fk_allowed_vlan_id INTEGER,
+      CONSTRAINT trunk_interface FOREIGN KEY (fk_interface_id) REFERENCES Interface (pk_interface_id) ON DELETE CASCADE,
+      CONSTRAINT trunk_vlan FOREIGN KEY (fk_allowed_vlan_id) REFERENCES VLAN (pk_vlan_id) ON DELETE CASCADE
+  );
 
 Tabellen
 --------
