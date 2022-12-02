@@ -1,7 +1,7 @@
 Compare
 =====
 
-.. _installation:
+.. _compare:
 
 Installation
 ------------

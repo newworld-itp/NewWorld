@@ -1,7 +1,7 @@
 Lazy Conf
 =====
 
-.. _installation:
+.. _lazyconf:
 
 Installation
 ------------

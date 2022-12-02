@@ -1,7 +1,7 @@
 Update
 =====
 
-.. _installation:
+.. _update:
 
 Installation
 ------------
