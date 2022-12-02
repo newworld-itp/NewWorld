@@ -4,21 +4,22 @@ Database
 
 .. _installation:
 
-VLAN
-____
-name - Name des VLANs
-pk_vlan_id - ID des VLANs
-
-Trunking
+Tabellen
 --------
-fk_interface_id - Interface auf welchem ein VLAN getrunked wird; Pointed auf Interface(pk_interface_id)
-fk_vlan_id - VLAN welches auf einem Interface getrunked wird; Pointed auf VLAN(pk_vlan_id)
+
+- VLAN
+  - name - Name des VLANs
+  - pk_vlan_id - ID des VLANs
+
+- Trunking
+  - fk_interface_id - Interface auf welchem ein VLAN getrunked wird; Pointed auf Interface(pk_interface_id)
+  - fk_vlan_id - VLAN welches auf einem Interface getrunked wird; Pointed auf VLAN(pk_vlan_id)
 
 Interface
 ---------
 fk_switch_id - ID von dem Switch dem das Inteface gehört; Pointed auf Switch(pk_switch_id)
 fk_access_vlan - ID von dem VLAN welches als Access VLAN auf dem Interface konfiguriert ist; Pointed auf VLAN(pk_vlan_id)
-fk_voice_vlan - ID von dem VLAn welches als Voice VLAN auf dem Interface konfiguriert ist; Pointed auf VLAN(pk_vlan_id)
+fk_voice_vlan - ID von dem VLAN welches als Voice VLAN auf dem Interface konfiguriert ist; Pointed auf VLAN(pk_vlan_id)
 fk_device_id - ID von dem angeschlossenem Gerät; Pointed auf Device(pk_device_id)
 int_name - Interface Bezeichnung auf dem Switch
 int_description - Description auf dem Interface
