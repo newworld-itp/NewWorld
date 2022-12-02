@@ -14,6 +14,7 @@ Contents
    what_is_newworld
    installation
    database
+   parse
    compare
    update
    lazy_conf
