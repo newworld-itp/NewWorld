@@ -4,22 +4,93 @@ Database
 
 .. _installation:
 
+
+.. image:: newworld.png
+
+
+.. code-block:: sql
+
+  CREATE TABLE Switch
+  (
+      pk_switch_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      hostname     varchar(20) UNIQUE
+  );
+
+  CREATE TABLE VLAN
+  (
+      pk_vlan_id INTEGER PRIMARY KEY,
+      name       varchar(20)
+  );
+
+  CREATE TABLE End_Device
+  (
+      pk_device_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      hostname     varchar(20)
+  );
+
+  CREATE TABLE Interface
+  (
+      pk_interface_id        INTEGER PRIMARY KEY AUTOINCREMENT,
+      fk_switch_id           INTEGER,
+      fk_access_vlan_id      INTEGER,
+      fk_voice_vlan_id       INTEGER,
+      fk_device_id           INTEGER,
+      int_name               varchar(10),
+      int_description        varchar(20),
+      has_security           boolean,
+      allowed_mac            varchar(17),
+      status                 INT, /* -1=admin_down, 0=down, 1=up */
+      protocol               boolean,
+      connected_switch       int,
+      connected_sw_interface varchar(10),
+      CONSTRAINT switch_interface FOREIGN KEY (fk_switch_id) REFERENCES Switch (pk_switch_id) ON DELETE CASCADE,
+      CONSTRAINT vlan_interface FOREIGN KEY (fk_access_vlan_id) REFERENCES VLAN (pk_vlan_id) ON DELETE SET NULL,
+      CONSTRAINT int_device FOREIGN KEY (fk_device_id) REFERENCES End_Device (pk_device_id) ON DELETE SET NULL,
+      CONSTRAINT voice_vlan FOREIGN KEY (fk_voice_vlan_id) REFERENCES VLAN (pk_vlan_id) ON DELETE SET NULL,
+      CONSTRAINT conntected_switch FOREIGN KEY (connected_switch) REFERENCES Switch (pk_switch_id) ON DELETE SET NULL
+  );
+
+  CREATE TABLE Switch_VLAN
+  (
+      fk_switch_id INTEGER,
+      fk_vlan_id   INTEGER,
+      CONSTRAINT vlan_switch FOREIGN KEY (fk_switch_id) REFERENCES Switch (pk_switch_id) ON DELETE CASCADE,
+      CONSTRAINT switch_vlan FOREIGN KEY (fk_vlan_id) REFERENCES VLAN (pk_vlan_id) ON DELETE CASCADE
+  );
+
+  CREATE TABLE Trunking
+  (
+      fk_interface_id    INTEGER,
+      fk_allowed_vlan_id INTEGER,
+      CONSTRAINT trunk_interface FOREIGN KEY (fk_interface_id) REFERENCES Interface (pk_interface_id) ON DELETE CASCADE,
+      CONSTRAINT trunk_vlan FOREIGN KEY (fk_allowed_vlan_id) REFERENCES VLAN (pk_vlan_id) ON DELETE CASCADE
+  );
+
 Tabellen
 --------
 
-**VLAN**
+VLAN
+^^^^
+
+VLAN ist die Tabelle für die VLANs im gesamten Netzwerk. In dieser Tabelle werden VLAN-ID und der dazugehörige Name gespeichert.
 
 - ``name`` - Name des VLANs
 
 - ``pk_vlan_id`` - ID des VLANs
 
-**Trunking**
+Trunking
+^^^^^^^^
+
+Die Trunking-Tabelle dient dazu, um die getrunkten VLANs zu den jeweiligen Interfaces zu mappen.
 
 - ``fk_interface_id`` - Interface auf welchem ein VLAN getrunked wird; Pointed auf Interface(pk_interface_id)
 
 - ``fk_allowed_vlan_id`` - VLAN welches auf einem Interface getrunked wird; Pointed auf VLAN(pk_vlan_id)
 
-**Interface**
+Interface
+^^^^^^^^^
+
+Die Interface-Tabelle speichert sämtliche Informationen zu allen Interfaces von Interface Description bis VLANs.
 
 - ``fk_switch_id`` - ID von dem Switch dem das Inteface gehört; Pointed auf Switch(pk_switch_id)
 
@@ -45,19 +116,28 @@ Tabellen
 
 - ``connected_sw_interface`` - Gegenüberliegendes Interface
 
-**Switch_VLAN**
+Switch_VLAN
+^^^^^^^^^^^
+
+Die Switch_VLAN-Tabelle gibt an welche VLANs auf welchen Switches vorhanden ist.
 
 - ``fk_switch_id`` - ID von dem Switch auf dem das VLAN vorhanden ist; Pointed auf Switch(pk_switch_id)
 
 - ``fk_vlan_id`` - VLAN welches auf dem Switch vorhanden ist; Pointed auf VLAN(pk_vlan_id)
 
-**Switch**
+Switch
+^^^^^^
+
+Die Switch-Tabelle beinhaltet jeden Switch im gesamten Netzwerk.
 
 - ``pk_switch_id`` - ID von dem Switch
 
 - ``hostname`` - Hostname auf dem Switch
 
-**End_Device**
+End_Device
+^^^^^^^^^^
+
+Die End_Device-Tabelle beinhaltet jedes Endgerät im Netzwerk.
 
 - ``pk_decive_id`` - ID vom End Gerät
 
@@ -66,66 +146,37 @@ Tabellen
 Constraints
 -----------
 
-**VLAN(pk_vlan_id)**
+VLAN(pk_vlan_id)
+^^^^^^^^^^^^^^^^
 
 - ``AUTOINCREMENT``
 
-- ``ON DELETE CASCADE`` -> Trunking(fk_allowed_vlan_id)
+- ``ON DELETE CASCADE`` → Trunking(fk_allowed_vlan_id)
 
-- ``ON DELETE CASCADE`` -> Switch_VLAN(fk_vlan_id)
+- ``ON DELETE CASCADE`` → Switch_VLAN(fk_vlan_id)
 
-- ``ON DELETE SET NULL`` -> Interface(fk_access_vlan)
+- ``ON DELETE SET NULL`` → Interface(fk_access_vlan)
 
-- ``ON DELETE SET NULL`` -> Interface(fk_voice_vlan_id)
+- ``ON DELETE SET NULL`` → Interface(fk_voice_vlan_id)
 
-**Switch(pk_switch_id)**
-
-- ``AUTOINCREMENT``
-
-- ``ON DELETE CASCADE`` -> Switch_Vlan(fk_switch_id)
-
-- ``ON DELETE CASCADE`` -> Interface(fk_switch_id)
-
-**Deivce(pk_device_id)**
+Switch(pk_switch_id)
+^^^^^^^^^^^^^^^^^^^^
 
 - ``AUTOINCREMENT``
 
-- ``ON DELETE SET NULL`` -> Interface(fk_device_id)
+- ``ON DELETE CASCADE`` → Switch_Vlan(fk_switch_id)
 
-**Interface(pk_interface_id)**
+- ``ON DELETE CASCADE`` → Interface(fk_switch_id)
+
+Deivce(pk_device_id)
+^^^^^^^^^^^^^^^^^^^^
 
 - ``AUTOINCREMENT``
 
-- ``ON DELETE CASCADE`` -> Trunking(fk_interface_id)
+- ``ON DELETE SET NULL`` → Interface(fk_device_id)
 
+Interface(pk_interface_id)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+- ``AUTOINCREMENT``
 
-
-Installation
-------------
-
-To use Lumache, first install it using pip:
-
-.. code-block:: console
-
-   (.venv) $ pip install lumache
-
-Creating recipes
-----------------
-
-To retrieve a list of random ingredients,
-you can use the ``lumache.get_random_ingredients()`` function:
-
-.. autofunction:: lumache.get_random_ingredients
-
-The ``kind`` parameter should be either ``"meat"``, ``"fish"``,
-or ``"veggies"``. Otherwise, :py:func:`lumache.get_random_ingredients`
-will raise an exception.
-
-.. autoexception:: lumache.InvalidKindError
-
-For example:
-
->>> import lumache
->>> lumache.get_random_ingredients()
-['shells', 'gorgonzola', 'parsley']
-
+- ``ON DELETE CASCADE`` → Trunking(fk_interface_id)
