@@ -7,8 +7,11 @@ Database
 Tabellen
 --------
 
-**VLAN**
+.. image:: newworld.png
 
+
+VLAN
+^
 - ``name`` - Name des VLANs
 
 - ``pk_vlan_id`` - ID des VLANs
@@ -19,8 +22,8 @@ Tabellen
 
 - ``fk_allowed_vlan_id`` - VLAN welches auf einem Interface getrunked wird; Pointed auf VLAN(pk_vlan_id)
 
-**Interface**
-
+Interface
+^
 - ``fk_switch_id`` - ID von dem Switch dem das Inteface gehört; Pointed auf Switch(pk_switch_id)
 
 - ``fk_access_vlan`` - ID von dem VLAN welches als Access VLAN auf dem Interface konfiguriert ist; Pointed auf VLAN(pk_vlan_id)
@@ -70,33 +73,33 @@ Constraints
 
 - ``AUTOINCREMENT``
 
-- ``ON DELETE CASCADE`` -> Trunking(fk_allowed_vlan_id)
+- ``ON DELETE CASCADE`` → Trunking(fk_allowed_vlan_id)
 
-- ``ON DELETE CASCADE`` -> Switch_VLAN(fk_vlan_id)
+- ``ON DELETE CASCADE`` → Switch_VLAN(fk_vlan_id)
 
-- ``ON DELETE SET NULL`` -> Interface(fk_access_vlan)
+- ``ON DELETE SET NULL`` → Interface(fk_access_vlan)
 
-- ``ON DELETE SET NULL`` -> Interface(fk_voice_vlan_id)
+- ``ON DELETE SET NULL`` → Interface(fk_voice_vlan_id)
 
 **Switch(pk_switch_id)**
 
 - ``AUTOINCREMENT``
 
-- ``ON DELETE CASCADE`` -> Switch_Vlan(fk_switch_id)
+- ``ON DELETE CASCADE`` → Switch_Vlan(fk_switch_id)
 
-- ``ON DELETE CASCADE`` -> Interface(fk_switch_id)
+- ``ON DELETE CASCADE`` → Interface(fk_switch_id)
 
 **Deivce(pk_device_id)**
 
 - ``AUTOINCREMENT``
 
-- ``ON DELETE SET NULL`` -> Interface(fk_device_id)
+- ``ON DELETE SET NULL`` → Interface(fk_device_id)
 
 **Interface(pk_interface_id)**
 
 - ``AUTOINCREMENT``
 
-- ``ON DELETE CASCADE`` -> Trunking(fk_interface_id)
+- ``ON DELETE CASCADE`` → Trunking(fk_interface_id)
 
 
 
