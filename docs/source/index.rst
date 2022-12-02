@@ -17,4 +17,4 @@ Contents
    parse
    compare
    update
-   lazy_conf
+   lazyconf
