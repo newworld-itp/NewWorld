@@ -7,7 +7,7 @@ Database
 
 .. image:: newworld.png
 
-Create-Statements in SQL:
+
 .. code-block:: sql
 
 CREATE TABLE Switch
