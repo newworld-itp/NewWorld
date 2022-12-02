@@ -3,28 +3,28 @@ Installation
 
 .. _installation:
 
-Installation
+Nur Django
 ------------
 
-To use Lumache, first install it using pip:
+Um NewWorld zu installieren muss man zuerst einmal das GitLab Repository clonen
 
 .. code-block:: console
 
-   (.venv) $ pip install lumache
+   gnsave@server $ git clone https://gitlab.com/HTL-Rennweg/itp2022/new-world.git
+   
+Danach muss man Python und die Python Libraries(z.B. Django) installieren
 
-Creating recipes
-----------------
+.. code-block:: console
 
-To retrieve a list of random ingredients,
-you can use the ``lumache.get_random_ingredients()`` function:
+   gnsave@server $ sudo apt-get install python3
+   gnsave@server $ cd NewWorld
+   gnsave@server $ pip3 install -r requirements.txt
 
-.. autofunction:: lumache.get_random_ingredients
+Zu guter Letzt muss man newworld.py starten
 
-The ``kind`` parameter should be either ``"meat"``, ``"fish"``,
-or ``"veggies"``. Otherwise, :py:func:`lumache.get_random_ingredients`
-will raise an exception.
+.. code-block:: console
 
-.. autoexception:: lumache.InvalidKindError
+   gnsave@server $ python3 newworld.py -p <folder_path> <-c/-u>
 
 For example:
 
