@@ -72,6 +72,8 @@ Tabellen
 VLAN
 ^^^^
 
+VLAN ist die Tabelle für die VLANs im gesamten Netzwerk. In dieser Tabelle werden VLAN-ID und der dazugehörige Name gespeichert.
+
 - ``name`` - Name des VLANs
 
 - ``pk_vlan_id`` - ID des VLANs
@@ -79,12 +81,16 @@ VLAN
 Trunking
 ^^^^^^^^
 
+Die Trunking-Tabelle dient dazu, um die getrunkten VLANs zu den jeweiligen Interfaces zu mappen.
+
 - ``fk_interface_id`` - Interface auf welchem ein VLAN getrunked wird; Pointed auf Interface(pk_interface_id)
 
 - ``fk_allowed_vlan_id`` - VLAN welches auf einem Interface getrunked wird; Pointed auf VLAN(pk_vlan_id)
 
 Interface
 ^^^^^^^^^
+
+Die Interface-Tabelle speichert sämtliche Informationen zu allen Interfaces von Interface Description bis VLANs.
 
 - ``fk_switch_id`` - ID von dem Switch dem das Inteface gehört; Pointed auf Switch(pk_switch_id)
 
@@ -113,6 +119,8 @@ Interface
 Switch_VLAN
 ^^^^^^^^^^^
 
+Die Switch_VLAN-Tabelle gibt an welche VLANs auf welchen Switches vorhanden ist.
+
 - ``fk_switch_id`` - ID von dem Switch auf dem das VLAN vorhanden ist; Pointed auf Switch(pk_switch_id)
 
 - ``fk_vlan_id`` - VLAN welches auf dem Switch vorhanden ist; Pointed auf VLAN(pk_vlan_id)
@@ -120,12 +128,16 @@ Switch_VLAN
 Switch
 ^^^^^^
 
+Die Switch-Tabelle beinhaltet jeden Switch im gesamten Netzwerk.
+
 - ``pk_switch_id`` - ID von dem Switch
 
 - ``hostname`` - Hostname auf dem Switch
 
 End_Device
 ^^^^^^^^^^
+
+Die End_Device-Tabelle beinhaltet jedes Endgerät im Netzwerk.
 
 - ``pk_decive_id`` - ID vom End Gerät
 
@@ -168,35 +180,3 @@ Interface(pk_interface_id)
 - ``AUTOINCREMENT``
 
 - ``ON DELETE CASCADE`` → Trunking(fk_interface_id)
-
-
-
-Installation
-------------
-
-To use Lumache, first install it using pip:
-
-.. code-block:: console
-
-   (.venv) $ pip install lumache
-
-Creating recipes
-----------------
-
-To retrieve a list of random ingredients,
-you can use the ``lumache.get_random_ingredients()`` function:
-
-.. autofunction:: lumache.get_random_ingredients
-
-The ``kind`` parameter should be either ``"meat"``, ``"fish"``,
-or ``"veggies"``. Otherwise, :py:func:`lumache.get_random_ingredients`
-will raise an exception.
-
-.. autoexception:: lumache.InvalidKindError
-
-For example:
-
->>> import lumache
->>> lumache.get_random_ingredients()
-['shells', 'gorgonzola', 'parsley']
-
