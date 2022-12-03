@@ -10,7 +10,7 @@ Wie funktioniert NewWorld?
 
 NewWorld bekommt ``Cisco Show Commands`` und ``JSON`` Dateien als Input und wandelt diese in Python ``dictionaries`` um. Nachdem dieser Prozess beendet wurde, werden diese ``dictionaries`` in ``SQL`` Statements umgewandelt und auf einer ``SQLite`` Datenbank augeführt.
 
-Das Ergebnis von NewWorld kommt auf die gewählte Methode an (siehe :ref:`compare` und :ref:`update`). 
+Das Ergebnis von NewWorld kommt auf die gewählte Methode an (siehe :ref:`usage` ).
 Wenn man die Datenbank mit der derzeitgen Konfiguration befüllen möchte, muss man NewWorld mit der ``update`` (siehe :ref:`_update_usage` ) Methode starten. 
 Wenn man die  derzeitige Konfiguration mit der Konfiguration in der Datenbank vergleichen möchte muss man die ``compare`` (siehe :ref:`_compare_usage` ) Methode benutzen.
 
