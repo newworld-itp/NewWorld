@@ -23,7 +23,14 @@ find_switch_id
         row = rows[0]
         switch_id = row[0]
         return switch_id
-        
+
+``sql_query`` ist das SQL-Statement welches ausgeführt wird.
+Hierbei wollen wir die ID von dem Switch mit einem bestimmten Hostname.
+Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt und mit
+``db_curser.fetchall()`` wird die Ergebnis-Tabelle returned.
+Zuletzt wird dann die Switch-ID, welche sich in ``rows`` befindet
+mit einem ``return`` weitergegeben.
+
         
 compare_vlans
 `````````````````````````````
@@ -39,10 +46,7 @@ compare_vlans
         :return: the errors
         """
         sql_query = "SELECT fk_vlan_id, name FROM Switch_VLAN JOIN VLAN ON pk_vlan_id = fk_vlan_id " + \
-                    f"WHERE fk_switch_id = {switch_id} UNION SELECT fK_voice_vlan_id, name FROM Interface " + \
-                    "JOIN Switch_VLAN SV on Interface.fk_switch_id = SV.fk_switch_id " + \
-                    "JOIN VLAN V on V.pk_vlan_id = fK_voice_vlan_id " + \
-                    f"WHERE SV.fk_switch_id = {switch_id};"
+                    f"WHERE fk_switch_id = {switch_id};"
 
         db_cursor.execute(sql_query)
         rows = db_cursor.fetchall()
@@ -61,6 +65,12 @@ compare_vlans
             f"File-Wert: {vlans_from_file[vlan]}"
             for vlan in in_both if vlans_from_db[vlan] != vlans_from_file[vlan]]
         return errors
+
+Diese Methode liefert die Unterschiede zwischen dem Status von einem Gerät in der DB
+und dem des neuen Files. ``sql_query`` ist hierbei das SQL-Statement welches ausgeführt wird.
+Hier wollen wir die VLANs auf einem Switch zusammen mit dem VLAN-Name herausfinden.
+Das Ergebnis wird in ``rows`` gespeichert. Am Ende wird eine List retuned mit einer
+ausführlichen und detailreichen Ausgabe zum VLAN vergleich.
         
 compare_interfaces
 `````````````````````````````
@@ -122,7 +132,8 @@ compare_interfaces
     errors += [f"Interface {interface} ist in der File aber nicht in der DB" for interface in
                interfaces_from_file.keys()]
     return errors
-    
+
+``sql_query`` ist hierbei das SQL-Statement welches ausgeführt wird.
     
 compare_port_security
 `````````````````````````````
