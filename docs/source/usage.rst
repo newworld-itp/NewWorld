@@ -6,7 +6,12 @@ Usage
 -p, --path
 `````````````````````````````
 
-NewWorld arbeitet mit mehreren Textdateien. Damit man nicht jede von diesen Dateien einzeln angeben muss, haben wir uns dafür entschieden die Dateien in einer Ordnerstruktur abzulegen. 
+NewWorld arbeitet mit mehreren Textdateien. Damit man nicht jede von diesen Dateien einzeln angeben muss, haben wir uns dafür entschieden die Dateien in einer Ordnerstruktur abzulegen.
+
+.. code-block:: console
+
+    python3 newworld.py -p ``folder`` <-u/-c>
+
 
 In dem untenstehenden Beispiel würde man das Programm folgendermaßen ausführen:
 
@@ -71,13 +76,11 @@ Im untenliegenden Beispiel wäre das z.B. ``l2_interfaces.json`` oder ``show_cdp
 -u, --update
 `````````````````````````````
 
-Danach muss man Python und die Python Libraries(z.B. Django) installieren
+Um die Datenbank upzudaten, muss man die -u Option verwenden. Damit wird die Datenbank mit den Daten die derzeit im ``folder`` stehen überschrieben.
 
-.. code-block:: console
+.. code-block:: bash
 
-   gnsave@server $ sudo apt-get install python3
-   gnsave@server $ cd NewWorld
-   gnsave@server $ pip3 install -r requirements.txt
+    python3 newworld.py -p ``folder`` -u
    
    
 .. _compare_usage:
@@ -85,10 +88,10 @@ Danach muss man Python und die Python Libraries(z.B. Django) installieren
 -c, --compare
 `````````````````````````````
 
-Zu guter Letzt muss man newworld.py starten
+Um die derzeit aktive Konfiguration mit der in der Datenbank zu vergleichen, muss man die -c Option verwenden. Als Ergebnis bekommt man die Abweichungen ausgegeben.
 
-.. code-block:: console
+.. code-block:: bash
 
-   gnsave@server $ python3 newworld.py -p <folder_path> <-c/-u>
+    python3 newworld.py -p ``folder`` -c
 
 
