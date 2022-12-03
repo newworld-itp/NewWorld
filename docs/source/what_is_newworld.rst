@@ -14,11 +14,9 @@ Das Ergebnis von NewWorld kommt auf die gewählte Methode an (siehe :ref:`compar
 Wenn man die Datenbank mit der derzeitgen Konfiguration befüllen möchte, muss man NewWorld mit der update (siehe :ref:`_update_usage` ) Methode starten. 
 Wenn man die  derzeitige Konfiguration mit der Konfiguration in der Datenbank vergleichen möchte muss man die compare (siehe :ref:`_compare_usage` ) Methode benutzen.
 
-The output of NewWorld is dependent on the method (see :ref:`compare` and :ref:`update`) chosen. When updating the Database, the success of the operation is returned. When comparing the current state of your network with the accepted one, the output is the differences found between these states.
-
 .. _LazyConf: http://lazyconf.github.io
 
-Compatibility
+Kompatibilität
 -------------
 
-NewWorld workes platform-independently on any machine able to run Python 3.X.
+NewWorld läuft auf jeder platform-unabhängig auf jedem Gerät, dass Python 3.X laufen lassen kann.
