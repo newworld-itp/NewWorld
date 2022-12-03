@@ -16,21 +16,21 @@ In dem untenstehenden Beispiel würde man das Programm folgendermaßen ausführe
 
 
 Der angegebene Ordner ist das Überverzeichnis der Geräte.
-Im untenliegenden Beispiel wäre das 'configs'.
+Im untenliegenden Beispiel wäre das ``configs``.
 
 
 Die unterliegenden Ordner sind die Geräte deren Konfiguration gespeichert werden.
-Im untenliegenden Beispiel wäre das 'SW1' oder 'SW2'.
+Im untenliegenden Beispiel wäre das ``SW1`` oder ``SW2``.
 
 Die darunterliegenden Ordner sind die Timestamps wann diese Konfiguration gespeichert wurde.
-Im untenliegenden Beispiel wäre das '2022-11-22_08-02-07' oder '2022-11-23_09-17-13'.
+Im untenliegenden Beispiel wäre das ``2022-11-22_08-02-07`` oder ``2022-11-23_09-17-13``.
 
 .. note::
 
    Es wird immer der NEUSTE Ordner verwendet! (= der Ordner mit dem "höchsten" Namen)
 
 Die Dateien die in diesem Ordner liegen sind die Textdateien, in denen sich die Konfigurationen befinden.
-Im untenliegenden Beispiel wäre das z.B. 'l2_interfaces.json' oder 'show_cdp_neighbors.txt'.
+Im untenliegenden Beispiel wäre das z.B. ``l2_interfaces.json`` oder ``show_cdp_neighbors.txt``.
 
 .. code-block:: bash
 
