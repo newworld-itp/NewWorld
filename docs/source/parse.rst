@@ -7,6 +7,8 @@ Parse
 parse_vlan
 `````````````````````````````
 
+Parse_Vlan nimmt eine JSON File als input und wandelt diesen in ein dictionary im Format {VLAN_ID: 'VLAN_NAME', ...}
+
 Input file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -94,6 +96,8 @@ Input file
 
 Method
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+path_to_vlan_json_file: the path to the vlan-data.json file
 
 .. code-block:: python
 

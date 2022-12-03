@@ -1,14 +1,18 @@
-What is NewWorld?
+Was ist NewWorld?
 ==================
 
-NewWorld provides an easy and intuitive way to monitor the Layer 2 of your network. It has been developed by three students of the HTL Rennweg in Vienna. It is based on Python and SQLite, but can be comfortabely executed on the command-line. By using NewWorld you can compare the current state of your network with the accepted one.
+NewWorld ist ein leicht zu bedienendes und intuitives Tool um den Layer 2 eines Netzwerks zu überwachen. Es ist von drei Schülern der HTL Rennweg in Wien developed worden. Das Tool basiert auf Python und SQLite und kann bequem über die Kommandozeile bedient werden. 
 
-It is integrated in LazyConf_, and automatically updates without any user-input. This integration enables an even greater monitoring of your network, by monitoring not only the Layer 2 but also Layer 3.
+Durch die Benutzung von NewWorld kann man den derzeitigen Status des Netzwerkes mit dem akzeptierten vergleichen. Außerdem ist das Tool in LazyConf_ integriert und aktualisiert sich automatisch ohne jeglichen Benutzer-Input. Durch diese Integration lässt sich eine noch bessere Überwachung erreichen, da nicht nur der Layer 2 sondern auch der Layer 3 überwacht wird.
 
-How does NewWorld work?
+Wie funktioniert NewWorld?
 ------------------------
 
-NewWorld takes Cisco Show Commands and JSON Files and input. These files are then parsed and converted into dictionaries. After the parsing is complete, these dictionaries are then turned into SQL Statements and excecuted on the Database.
+NewWorld bekommt 'Cisco Show Commands' und 'JSON' Dateien als Input und wandelt diese in Python 'dictionaries' um. Nachdem dieser Prozess beendet wurde, werden diese 'dictionaries' in SQL Statements umgewandelt und auf einer SQLite Datenbank augeführt.
+
+Das Ergebnis von NewWorld kommt auf die gewählte Methode an (siehe :ref:`compare` und :ref:`update`). 
+Wenn man die Datenbank mit der derzeitgen Konfiguration befüllen möchte, muss man NewWorld mit der update (siehe :ref:`_update_usage` ) Methode starten. 
+Wenn man die  derzeitige Konfiguration mit der Konfiguration in der Datenbank vergleichen möchte muss man die compare (siehe :ref:`_compare_usage` ) Methode benutzen.
 
 The output of NewWorld is dependent on the method (see :ref:`compare` and :ref:`update`) chosen. When updating the Database, the success of the operation is returned. When comparing the current state of your network with the accepted one, the output is the differences found between these states.
 

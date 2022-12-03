@@ -4,7 +4,7 @@ NewWorld Documentation
 
 .. note::
 
-   The repository containing the source code isn't public. Please ask one of your professors to grant you access.
+   Das Repository, dass den Source Code beinhaltet ist nicht öffentlich. Bitte frage einen deiner Professoren, ob er dir die benötigten Zugriffsrechte gibt.
 
 Contents
 --------
@@ -13,6 +13,7 @@ Contents
 
    what_is_newworld
    installation
+   usage
    database
    parse
    compare
