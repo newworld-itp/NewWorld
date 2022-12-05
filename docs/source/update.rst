@@ -22,7 +22,7 @@ insert_switch
                     f"VALUES ('{hostname}')"
         db_cursor.execute(sql_query)
 
-``sql_query`` ist das SQL-Statement welches ausgeführt wird. Hierbei wollen wir einen Switch mittels dem ``hostname`` in die Datenbank schreiben. Ein Entry besteht somit aus der Switch-ID sowie dem jeweiligem Hostname. Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt.
+``sql_query`` ist das SQL-Statement welches ausgeführt wird. Hierbei wollen wir einen Switch mittels des ``hostname`` Parameters in die Datenbank schreiben. Ein Entry besteht somit aus der Switch-ID sowie dem jeweiligem Hostname. Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt.
 
 insert_switch
 `````````````````````````````
@@ -110,7 +110,7 @@ insert_trunk
                             f"VALUES ('{find_interface_id(hostname, trunk_interface_id, db_cursor)}', '{allowed_vlan_id}')"
                 db_cursor.execute(sql_query)
 
-``sql_query`` ist das SQL-Statement welches ausgeführt wird. Hierbei wollen wir die Trunking Information der Interfaces als Zwischentabelle, mithilfe des ``hostname`` Parameters und dem ``l2_interfaces_from_file`` Dictionary in die Datenbank schreiben. Ein Entry besteht somit aus der Interface-ID sowie der VLAN-ID des VLANs, welches auf dem Interface erlaubt ist. Aus dem ``l2_interfaces_from_file`` Dictionary werden die Trunk Interfaces für die das Attribut ``fk_interface_id`` ausgelesen. Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt.
+``sql_query`` ist das SQL-Statement welches ausgeführt wird. Hierbei wollen wir die Trunking Information der Interfaces als Zwischentabelle, mithilfe des ``hostname`` Parameters und dem zuvor geparsten ``l2_interfaces_from_file`` Dictionary in die Datenbank schreiben. Ein Entry besteht somit aus der Interface-ID sowie der VLAN-ID des VLANs, welches auf dem Interface erlaubt ist. Aus dem ``l2_interfaces_from_file`` Dictionary werden die Trunk Interfaces für die das Attribut ``fk_interface_id`` ausgelesen. Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt.
 
 insert_switch_vlan
 `````````````````````````````
@@ -130,5 +130,5 @@ insert_switch_vlan
                         f"VALUES ('{switch_id}', '{vlan_id}')"
             db_cursor.execute(sql_query)
 
-``sql_query`` ist das SQL-Statement welches ausgeführt wird. Hierbei wollen wir die VLANs welche sich auf einem Switch befinden als Zwischentabelle, mithilfe des ``switch_id`` Parameters und dem ``vlans_from_file`` Dictionary in die Datenbank schreiben. Ein Entry besteht somit aus der Switch-ID sowie der VLAN-ID des VLANs, welches auf dem Switch konfiguriert ist. Aus dem ``vlans_from_file`` Dictionary werden die VLANs, welche sich auf einem Switch befinden, für das Attribut ``fk_vlan_id`` ausgelesen. Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt.
+``sql_query`` ist das SQL-Statement welches ausgeführt wird. Hierbei wollen wir die VLANs welche sich auf einem Switch befinden als Zwischentabelle, mithilfe des ``switch_id`` Parameters und dem zuvor geparsten ``vlans_from_file`` Dictionary in die Datenbank schreiben. Ein Entry besteht somit aus der Switch-ID sowie der VLAN-ID des VLANs, welches auf dem Switch konfiguriert ist. Aus dem ``vlans_from_file`` Dictionary werden die VLANs, welche sich auf einem Switch befinden, für das Attribut ``fk_vlan_id`` ausgelesen. Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt.
 
