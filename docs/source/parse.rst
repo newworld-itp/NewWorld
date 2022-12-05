@@ -4,10 +4,15 @@ Parse
 .. _parse:
 
 
+
+Die Methoden in ``config_parser.db`` werden von NewWorld importiert. Sie lesen die angegeben Dateien ein und wandeln diese in ``dictionaries`` um.
+
 parse_vlan
 `````````````````````````````
 
-Parse_Vlan nimmt eine JSON File als input und wandelt diesen in ein dictionary im Format {VLAN_ID: 'VLAN_NAME', ...}
+parse_vlan nimmt eine JSON File als input und wandelt diesen in ein dictionary im Format ``{VLAN_ID: 'VLAN_NAME', ...}`` um.
+
+filename: ``vlan-data.json``
 
 Input file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -117,6 +122,10 @@ path_to_vlan_json_file: the path to the vlan-data.json file
 parse_interface_descriptions
 `````````````````````````````
 
+parse_interface_descriptions nimmt den ``Cisco "show interface descriptions"`` Output als input und wandelt diesen in ein dictionary im Format ``{INT_NAME: ('STATUS', 'PROTOCOL', 'DESCRIPTION'), ...}`` um.
+
+filename: ``interface-descriptions.txt``
+
 Input file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -165,6 +174,9 @@ Method
 
 parse_interfaces
 `````````````````````````````
+parse_interfaces nimmt eine JSON File als input und wandelt diesen in ein dictionary im Format ``{INT_NAME: ('ACCESS_VLAN', 'VOICE_VLAN', [ALLOWED_TRUNK_VLAN_1,ALLOWED_TRUNK_VLAN_2,...,ALLOWED_TRUNK_VLAN_N]), ...}`` um.
+
+filename: ``l2-interfacess.txt``
 
 Input file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -266,6 +278,10 @@ Method
 parse_port_security
 `````````````````````````````
 
+parse_port_security nimmt den ``Cisco "show port-security address"`` Output als input und wandelt diesen in ein dictionary im Format ``{INT_NAME: [VLAN, MAC-ADDRESS], ...}`` um.
+
+filename: ``show_port-security_address.txt``
+
 Input file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -307,6 +323,10 @@ Method
 
 parse_cdp
 `````````````````````````````
+
+parse_cdp nimmt den ``Cisco "show cdp neighbors"`` Output als input und wandelt diesen in ein dictionary im Format ``{INT_NAME: [VLAN, MAC-ADDRESS], ...}`` um.
+
+filename: ``show_cdp_neighbors.txt``
 
 Input file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
