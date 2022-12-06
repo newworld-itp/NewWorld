@@ -17,31 +17,9 @@ Lazy Conf ist eine Diplomarbeit der HTL Rennweg, welche sich mithilfe von Ansibl
     configs
     │
     ├── SW1
-    │   ├── 2022-11-22_08-02-07
+    │   ├── git
     │   │   └── l2_interfaces.json
     │   │   └── vlan-data.json
     │   │   └── show_cdp_neighbors.txt
     │   │   └── show_interface_description.txt
     │   │   └── show_port-security_address.txt
-    │   │
-    │   └── 2022-11-23_09-17-13
-    │       └── l2_interfaces.json
-    │       └── vlan-data.json
-    │       └── show_cdp_neighbors.txt
-    │       └── show_interface_description.txt
-    │       └── show_port-security_address.txt
-    │
-    └── SW2      
-        ├── 2022-11-22_08-02-07
-        │   └── l2_interfaces.json
-        │   └── vlan-data.json
-        │   └── show_cdp_neighbors.txt
-        │   └── show_interface_description.txt
-        │   └── show_port-security_address.txt
-        │
-        └── 2022-11-23_09-17-13
-            └── l2_interfaces.json
-            └── vlan-data.json
-            └── show_cdp_neighbors.txt
-            └── show_interface_description.txt
-            └── show_port-security_address.txt
