@@ -85,7 +85,17 @@ insert_switch
                 sql_query += f"null, null);"
             db_cursor.execute(sql_query)
 
-``sql_query`` ist das SQL-Statement welches ausgeführt wird. Hierbei wollen wir ein Interface mittels der ``switch_id`` sowie den zuvor geparsten ``l2_interfaces_from_file``, ``int_desc_from_file``, ``port_security_from_file`` & ``cdp_from_file`` in die Datenbank schreiben. Aus dem ``l2_interfaces_from_file`` Dictionary wird das Access-VLAN, das Voice-VLAN sowie der Interface Identifier (z.B.: ``Gi0/0``) für die ``fk_access_vlan_id``, ``fk_voice_vlan_id`` & ``int_name`` Attribute ausgelesen. Folgend wird aus dem ``int_desc_from_file`` Dictionary die Interface Description, der Port Link Status sowie der Port Protocol Status für die Attribute ``int_description``, ``status`` & ``protocol`` ausgelesen. Außerdem wird aus dem ``port_security_from_file`` Dictionary ausgelesen ob das Interface Port-Security eingeschaltet hat und falls, Ja, welche MAC-Adresse erlaubt worden ist. Die Information wird für die Attribute ``has_security`` & ``allowed_mac`` ausgelesen. Zuletzt wird aus dem ``cdp_from_file`` Dictionary, der an dem Interface verbundene Switch, sowie das angeschlossene Interface dieses Switches, für die Attribute ``connected_switch`` & ``connected_sw_interface`` ausgelesen. Ein Entry besteht somit aus der Interface-ID, der Switch-ID, dem Access-VLAN, dem Voice-VLAN, einem verbundenen Edge-Device, dem Interface-Identifier, der Interface Description, dem Port-Security Zustand, der Allowed MAC-Adresse, dem Port Link Status, dem Port Protocol Status, dem an dem Interface verbundenen Switch sowie das Interface eben dieses Switches. Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt.
+``sql_query`` ist das SQL-Statement welches ausgeführt wird. Hierbei wollen wir ein Interface mittels der ``switch_id`` sowie den zuvor geparsten ``l2_interfaces_from_file``, ``int_desc_from_file``, ``port_security_from_file`` & ``cdp_from_file`` in die Datenbank schreiben.
+
+Aus dem ``l2_interfaces_from_file`` Dictionary wird das Access-VLAN, das Voice-VLAN sowie der Interface Identifier (z.B.: ``Gi0/0``) für die ``fk_access_vlan_id``, ``fk_voice_vlan_id`` & ``int_name`` Attribute ausgelesen.
+
+Folgend wird aus dem ``int_desc_from_file`` Dictionary die Interface Description, der Port Link Status sowie der Port Protocol Status für die Attribute ``int_description``, ``status`` & ``protocol`` ausgelesen. Außerdem wird aus dem ``port_security_from_file`` Dictionary ausgelesen ob das Interface Port-Security eingeschaltet hat und falls, Ja, welche MAC-Adresse erlaubt worden ist.
+
+Die Information wird für die Attribute ``has_security`` & ``allowed_mac`` ausgelesen.
+
+Zuletzt wird aus dem ``cdp_from_file`` Dictionary, der an dem Interface verbundene Switch, sowie das angeschlossene Interface dieses Switches, für die Attribute ``connected_switch`` & ``connected_sw_interface`` ausgelesen.
+
+Ein Entry besteht somit aus der Interface-ID, der Switch-ID, dem Access-VLAN, dem Voice-VLAN, einem verbundenen Edge-Device, dem Interface-Identifier, der Interface Description, dem Port-Security Zustand, der Allowed MAC-Adresse, dem Port Link Status, dem Port Protocol Status, dem an dem Interface verbundenen Switch sowie das Interface eben dieses Switches. Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt.
 
 insert_trunk
 `````````````````````````````
