@@ -26,8 +26,10 @@ find_switch_id
 
 ``sql_query`` ist das SQL-Statement welches ausgeführt wird.
 Hierbei wollen wir die ID von dem Switch mit einem bestimmten Hostname.
+
 Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt und mit
 ``db_curser.fetchall()`` wird die Ergebnis-Tabelle returned.
+
 Zuletzt wird dann die Switch-ID, welche sich in ``rows`` befindet
 mit einem ``return`` weitergegeben.
 
