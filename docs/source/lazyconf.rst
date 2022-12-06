@@ -18,8 +18,16 @@ Lazy Conf ist eine Diplomarbeit der HTL Rennweg, welche sich mithilfe von Ansibl
     │
     ├── SW1
     │   ├── git
-    │   │   └── l2_interfaces.json
-    │   │   └── vlan-data.json
-    │   │   └── show_cdp_neighbors.txt
-    │   │   └── show_interface_description.txt
-    │   │   └── show_port-security_address.txt
+    │       └── l2_interfaces.json
+    │       └── vlan-data.json
+    │       └── show_cdp_neighbors.txt
+    │       └── show_interface_description.txt
+    │       └── show_port-security_address.txt
+    │
+    └── SW2      
+        ├── git
+            └── l2_interfaces.json
+            └── vlan-data.json
+            └── show_cdp_neighbors.txt
+            └── show_interface_description.txt
+            └── show_port-security_address.txt
