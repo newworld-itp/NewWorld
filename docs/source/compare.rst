@@ -69,8 +69,11 @@ compare_vlans
 Diese Methode liefert die Unterschiede zwischen dem Status von einem Gerät in der DB
 und dem des neuen Files. ``sql_query`` ist hierbei das SQL-Statement welches ausgeführt wird.
 Hier wollen wir die VLANs auf einem Switch zusammen mit dem VLAN-Name herausfinden.
-Das Ergebnis wird in ``rows`` gespeichert. Am Ende wird eine List retuned mit einer
-ausführlichen und detailreichen Ausgabe zum VLAN vergleich.
+Das Ergebnis wird in ``rows`` gespeichert. 
+
+Diese VLANs werden dann mit denen aus der File ``vlans_from_file`` verglichen.
+
+Die Unterschiede werden dann ``errors`` gespeichert und zurückgeben.
         
 compare_interfaces
 `````````````````````````````
@@ -133,7 +136,14 @@ compare_interfaces
                interfaces_from_file.keys()]
     return errors
 
-``sql_query`` ist hierbei das SQL-Statement welches ausgeführt wird.
+Diese Methode liefert die Unterschiede zwischen dem Status von einem Gerät in der DB
+und dem des neuen Files. ``sql_query`` ist hierbei das SQL-Statement welches ausgeführt wird.
+Hier wollen wir die VLANs die auf einem Interface konfiguriert wurden ermitteln.
+Das Ergebnis wird in ``rows`` gespeichert. 
+
+Diese Interfaces(mit VLANs) werden dann mit denen aus der File ``interfaces_from_file`` verglichen.
+
+Die Unterschiede werden dann ``errors`` gespeichert und zurückgeben.
     
 compare_port_security
 `````````````````````````````
@@ -183,6 +193,14 @@ compare_port_security
 
         return errors
     
+Diese Methode liefert die Unterschiede zwischen dem Status von einem Gerät in der DB
+und dem des neuen Files. ``sql_query`` ist hierbei das SQL-Statement welches ausgeführt wird.
+Hier wollen wir die Mac-Addresse die an einem Interface erlaubt ist herausfinden.
+Das Ergebnis wird in ``rows`` gespeichert. 
+
+Diese Mac-Addressen werden dann mit denen aus der File ``compare_port_security`` verglichen.
+
+Die Unterschiede werden dann ``errors`` gespeichert und zurückgeben.
     
 compare_interface_descriptions
 `````````````````````````````
@@ -231,7 +249,15 @@ compare_interface_descriptions
                 f"File-Wert: {int_desc_from_file[interface][2]}")
     return errors
 
+Diese Methode liefert die Unterschiede zwischen dem Status von einem Gerät in der DB
+und dem des neuen Files. ``sql_query`` ist hierbei das SQL-Statement welches ausgeführt wird.
+Hier wollen wir die Interface Stati und die Interface Descriptions von einem Switch herausfinden.
+Das Ergebnis wird in ``rows`` gespeichert. 
 
+Diese Interface Stati und die Interface Descriptions werden dann mit denen aus der File ``int_desc_from_file`` verglichen.
+
+Die Unterschiede werden dann ``errors`` gespeichert und zurückgeben.
+    
     
 compare_cdp
 `````````````````````````````
@@ -275,3 +301,13 @@ compare_cdp
                     errors.append(err)
                 rows.remove(information)
         return errors
+
+
+Diese Methode liefert die Unterschiede zwischen dem Status von einem Gerät in der DB
+und dem des neuen Files. ``sql_query`` ist hierbei das SQL-Statement welches ausgeführt wird.
+Hier wollen wir die Informationen des gegenüberliegenden Switch herausfinden.
+Das Ergebnis wird in ``rows`` gespeichert. 
+
+Diese Informationen werden dann mit denen aus der File ``cdp_from_file`` verglichen.
+
+Die Unterschiede werden dann ``errors`` gespeichert und zurückgeben.
