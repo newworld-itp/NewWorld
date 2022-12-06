@@ -11,7 +11,7 @@ NewWorld arbeitet mit mehreren Textdateien. Damit man nicht jede von diesen Date
 
 .. code-block:: console
 
-    python3 newworld.py -p ``folder`` <-u/-c>
+    python3 newworld.py -p fo<lder> <-u/-c>
 
 
 In dem untenstehenden Beispiel würde man das Programm folgendermaßen ausführen:
@@ -66,7 +66,7 @@ Um die Datenbank upzudaten, muss man die -u Option verwenden. Damit wird die Dat
 
 .. code-block:: bash
 
-    python3 newworld.py -p ``folder`` -u
+    python3 newworld.py -p <folder> -u
    
    
 .. _compare_usage:
@@ -78,6 +78,6 @@ Um die derzeit aktive Konfiguration mit der in der Datenbank zu vergleichen, mus
 
 .. code-block:: bash
 
-    python3 newworld.py -p ``folder`` -c
+    python3 newworld.py -p <folder> -c
 
 
