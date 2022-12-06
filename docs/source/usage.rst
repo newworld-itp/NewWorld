@@ -11,7 +11,7 @@ NewWorld arbeitet mit mehreren Textdateien. Damit man nicht jede von diesen Date
 
 .. code-block:: console
 
-    python3 newworld.py -p fo<lder> <-u/-c>
+    python3 newworld.py -p <folder> <-u/-c>
 
 
 In dem untenstehenden Beispiel würde man das Programm folgendermaßen ausführen:
