@@ -6,7 +6,7 @@ Lazy Conf
 Zusammenarbeit
 ------------
 
-Lazy Conf ist eine Diplomarbeit der HTL Rennweg, welche sich mithilfe von Ansible_ mit der automatisierten Konfiguration von Switches befasst.
+Lazy Conf ist eine Diplomarbeit der HTL Rennweg, welche sich mithilfe von Ansible_ mit der automatisierten Konfiguration von Switches befasst. Sie speichern die ``Running Configuration`` zusammen mit ein paar ``show command outputs`` in zwei Ordnern. Einmal ``all_configs`` für veraltete Konfigurationen und einmal ``git`` für die aktuellste Konfiguration.
 
 .. _Ansible: https://www.ansible.com/
 
@@ -17,6 +17,7 @@ Lazy Conf ist eine Diplomarbeit der HTL Rennweg, welche sich mithilfe von Ansibl
     configs
     │
     ├── SW1
+    │   ├── all_configs
     │   ├── git
     │       └── l2_interfaces.json
     │       └── vlan-data.json
@@ -24,7 +25,8 @@ Lazy Conf ist eine Diplomarbeit der HTL Rennweg, welche sich mithilfe von Ansibl
     │       └── show_interface_description.txt
     │       └── show_port-security_address.txt
     │
-    └── SW2      
+    └── SW2     
+        ├── all_configs
         ├── git
             └── l2_interfaces.json
             └── vlan-data.json
