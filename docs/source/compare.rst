@@ -274,35 +274,35 @@ compare_cdp
         :param db_cursor: the cursor of the database
         :return: the errors
         """
-        sql_query = 'SELECT hostname, int_name, connected_sw_interface ' + \
-                    'FROM Interface ' + \
-                    'JOIN Switch S on connected_switch = pk_switch_id ' + \
-                    f'WHERE fk_switch_id = "{switch_id}";'
+        sql_query = 'SELECT int_name, connected_switch, connected_sw_interface FROM Interface ' + \
+                    f"WHERE fk_switch_id = {switch_id};"
 
         db_cursor.execute(sql_query)
         rows = db_cursor.fetchall()
+
         errors = []
+
         for information in rows:
-            neighbor = information[0]
-            local_interface = information[1]
+            neighbor = information[1]
+            local_interface = information[0]
             remote_interface = information[2]
-            err = f"CDP findet den Nachbarn '{neighbor}' in der File und der DB, aber"
-            error_occurred = False
 
-            if neighbor in cdp_from_file.keys():
-                if local_interface != cdp_from_file[neighbor][0]:
-                    err += f", das lokale Interface ist falsch. DB-Wert: {local_interface}, " \
-                           f"File-Wert: {cdp_from_file[neighbor][0]}"
-                    error_occurred = True
-                if remote_interface != cdp_from_file[neighbor][1]:
-                    err += f", das remote Interface ist falsch. DB-Wert: {remote_interface}, " \
-                           f"File-Wert: {cdp_from_file[neighbor][1]}"
-                    error_occurred = True
+            if local_interface not in cdp_from_file.keys() and neighbor is not None:
+                errors.append(
+                    f"Der Neighbor {neighbor} ist am Interface {local_interface} in der DB aber nicht in der File")
+            elif neighbor is not None:
+                if neighbor != cdp_from_file[local_interface][0]:
+                    errors.append(f"Der Neighbor am lokalen Interface {local_interface} ist falsch. DB-Wert: {neighbor}, "
+                                  f"File-Wert: {cdp_from_file[local_interface][0]}")
+                elif remote_interface != cdp_from_file[local_interface][1]:
+                    errors.append(f"Das remote Interface des Neighbors {neighbor} am lokalen Interface {local_interface} "
+                                  f"ist falsch. DB-Wert: {remote_interface}, "
+                                  f"File-Wert: {cdp_from_file[local_interface][1]}")
 
-                if error_occurred:
-                    errors.append(err)
-                rows.remove(information)
-        return errors
+                del cdp_from_file[local_interface]
+
+        return errors + [f"Der Neighbor {values[0]} ist am Interface {local_interface} in der File aber nicht in der DB" for local_interface, values in cdp_from_file.items()]
+
 
 
 Diese Methode liefert die Unterschiede zwischen dem Status von einem Gerät in der DB

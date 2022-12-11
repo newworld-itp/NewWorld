@@ -24,7 +24,7 @@ insert_switch
 
 ``sql_query`` ist das SQL-Statement welches ausgeführt wird. Hierbei wollen wir einen Switch mittels des ``hostname`` Parameters in die Datenbank schreiben. Ein Entry besteht somit aus der Switch-ID sowie dem jeweiligem Hostname. Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt.
 
-insert_switch
+insert_vlan
 `````````````````````````````
 
 .. code-block:: python
@@ -43,13 +43,13 @@ insert_switch
 
 ``sql_query`` ist das SQL-Statement welches ausgeführt wird. Hierbei wollen wir alle VLANs mittels dem zuvor geparsten ``vlans_from_file`` in die Datenbank schreiben. Ein Entry besteht somit aus der VLAN-ID sowie dem jeweiligem Namen. Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt.
 
-insert_switch
+insert_interfaces
 `````````````````````````````
 
 .. code-block:: python
 
-    def insert_interfaces(switch_id: int, l2_interfaces_from_file: dict, int_desc_from_file: dict,
-                          port_security_from_file: dict, cdp_from_file: dict, db_cursor: sqlite3.dbapi2.Cursor):
+    def insert_interfaces(switch_name: str, switch_id: int, l2_interfaces_from_file: dict, int_desc_from_file: dict,
+                      port_security_from_file: dict, cdp_from_file: dict, db_cursor: sqlite3.dbapi2.Cursor):
         """
         Insert the interfaces into the database
         :param switch_id: the switch_id of the switch
@@ -61,16 +61,19 @@ insert_switch
         :return:
         """
         for interface_id in l2_interfaces_from_file:
+            formatted_description = f"'{int_desc_from_file[interface_id][2]}'"
+            end_device = get_end_device(switch_name, interface_id)
+            formatted_end_device = f"'{end_device}'" if end_device else None
             sql_query = ""
-            sql_query += f"INSERT INTO Interface (fk_switch_id, fk_access_vlan_id, fk_voice_vlan_id, fk_device_id, " \
+            sql_query += f"INSERT INTO Interface (fk_switch_id, fk_access_vlan_id, fk_voice_vlan_id, end_device_name, " \
                          f"int_name, int_description, has_security, allowed_mac, status, protocol, connected_switch, " \
                          f"connected_sw_interface) " \
                          f"VALUES ('{switch_id}', " \
                          f"{'null' if l2_interfaces_from_file[interface_id][0] is None else l2_interfaces_from_file[interface_id][0]}, " \
                          f"{'null' if l2_interfaces_from_file[interface_id][1] is None else l2_interfaces_from_file[interface_id][1]}, " \
-                         f"null, " \
+                         f"{'null' if formatted_end_device is None else formatted_end_device}, " \
                          f"'{interface_id}', " \
-                         f"{'null' if int_desc_from_file[interface_id][2] is None else int_desc_from_file[interface_id][2]}, "
+                         f"{'null' if int_desc_from_file[interface_id][2] is None else formatted_description}, "
 
             try:
                 sql_query += f"'1', '{port_security_from_file[interface_id][1]}', "
