@@ -22,19 +22,13 @@ Database
       name       varchar(20)
   );
 
-  CREATE TABLE End_Device
-  (
-      pk_device_id INTEGER PRIMARY KEY AUTOINCREMENT,
-      hostname     varchar(20)
-  );
-
   CREATE TABLE Interface
   (
       pk_interface_id        INTEGER PRIMARY KEY AUTOINCREMENT,
       fk_switch_id           INTEGER,
       fk_access_vlan_id      INTEGER,
       fk_voice_vlan_id       INTEGER,
-      fk_device_id           INTEGER,
+      end_device_name        varchar(20),
       int_name               varchar(10),
       int_description        varchar(20),
       has_security           boolean,
@@ -45,7 +39,6 @@ Database
       connected_sw_interface varchar(10),
       CONSTRAINT switch_interface FOREIGN KEY (fk_switch_id) REFERENCES Switch (pk_switch_id) ON DELETE CASCADE,
       CONSTRAINT vlan_interface FOREIGN KEY (fk_access_vlan_id) REFERENCES VLAN (pk_vlan_id) ON DELETE SET NULL,
-      CONSTRAINT int_device FOREIGN KEY (fk_device_id) REFERENCES End_Device (pk_device_id) ON DELETE SET NULL,
       CONSTRAINT voice_vlan FOREIGN KEY (fk_voice_vlan_id) REFERENCES VLAN (pk_vlan_id) ON DELETE SET NULL,
       CONSTRAINT conntected_switch FOREIGN KEY (connected_switch) REFERENCES Switch (pk_switch_id) ON DELETE SET NULL
   );
@@ -98,7 +91,7 @@ Die Interface-Tabelle speichert sämtliche Informationen zu allen Interfaces von
 
 - ``fk_voice_vlan`` - ID von dem VLAN welches als Voice VLAN auf dem Interface konfiguriert ist; Pointed auf VLAN(``pk_vlan_id``)
 
-- ``fk_device_id`` - ID von dem angeschlossenem Gerät; Pointed auf Device(``pk_device_id``)
+- ``end_device_name`` - Name des ageschlossenen Endgerätes
 
 - ``int_name`` - Interface Bezeichnung auf dem Switch
 
@@ -134,15 +127,6 @@ Die Switch-Tabelle beinhaltet jeden Switch im gesamten Netzwerk.
 
 - ``hostname`` - Hostname auf dem Switch
 
-End_Device
-^^^^^^^^^^
-
-Die End_Device-Tabelle beinhaltet jedes Endgerät im Netzwerk.
-
-- ``pk_decive_id`` - ID vom End Gerät
-
-- ``hostname`` - Name/Bez vom End Gerät
-
 Constraints
 -----------
 
@@ -167,13 +151,6 @@ Switch(pk_switch_id)
 - ``ON DELETE CASCADE`` → Switch_Vlan(``fk_switch_id``)
 
 - ``ON DELETE CASCADE`` → Interface(``fk_switch_id``)
-
-Deivce(pk_device_id)
-^^^^^^^^^^^^^^^^^^^^
-
-- ``AUTOINCREMENT``
-
-- ``ON DELETE SET NULL`` → Interface(``fk_device_id``)
 
 Interface(pk_interface_id)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
