@@ -83,22 +83,22 @@ Trunking
 
 Die Trunking-Tabelle dient dazu, um die getrunkten VLANs zu den jeweiligen Interfaces zu mappen.
 
-- ``fk_interface_id`` - Interface auf welchem ein VLAN getrunked wird; Pointed auf Interface(pk_interface_id)
+- ``fk_interface_id`` - Interface auf welchem ein VLAN getrunked wird; Pointed auf Interface(``pk_interface_id``)
 
-- ``fk_allowed_vlan_id`` - VLAN welches auf einem Interface getrunked wird; Pointed auf VLAN(pk_vlan_id)
+- ``fk_allowed_vlan_id`` - VLAN welches auf einem Interface getrunked wird; Pointed auf VLAN(``pk_vlan_id``)
 
 Interface
 ^^^^^^^^^
 
 Die Interface-Tabelle speichert sämtliche Informationen zu allen Interfaces von Interface Description bis VLANs.
 
-- ``fk_switch_id`` - ID von dem Switch dem das Inteface gehört; Pointed auf Switch(pk_switch_id)
+- ``fk_switch_id`` - ID von dem Switch dem das Inteface gehört; Pointed auf Switch(``pk_switch_id``)
 
-- ``fk_access_vlan`` - ID von dem VLAN welches als Access VLAN auf dem Interface konfiguriert ist; Pointed auf VLAN(pk_vlan_id)
+- ``fk_access_vlan`` - ID von dem VLAN welches als Access VLAN auf dem Interface konfiguriert ist; Pointed auf VLAN(``pk_vlan_id``)
 
-- ``fk_voice_vlan`` - ID von dem VLAN welches als Voice VLAN auf dem Interface konfiguriert ist; Pointed auf VLAN(pk_vlan_id)
+- ``fk_voice_vlan`` - ID von dem VLAN welches als Voice VLAN auf dem Interface konfiguriert ist; Pointed auf VLAN(``pk_vlan_id``)
 
-- ``fk_device_id`` - ID von dem angeschlossenem Gerät; Pointed auf Device(pk_device_id)
+- ``fk_device_id`` - ID von dem angeschlossenem Gerät; Pointed auf Device(``pk_device_id``)
 
 - ``int_name`` - Interface Bezeichnung auf dem Switch
 
@@ -108,22 +108,22 @@ Die Interface-Tabelle speichert sämtliche Informationen zu allen Interfaces von
 
 - ``allowed_mac`` - MAC welche von Switchport Security erlaubt wird
 
-- ``status`` - Status vom Interface (``-1``=admin_down, ``0``=down, ``1``=up)
+- ``status`` - Status vom Interface (**-1** = ``admin_down``, **0** = ``down``, **1** = ``up``)
 
-- ``protocol`` - Boolean für Protocol Status (Up/Down)
+- ``protocol`` - Boolean für Protocol Status (Up / Down)
 
 - ``connected_switch`` - Der verbundene Switch auf dem Interface
 
-- ``connected_sw_interface`` - Gegenüberliegendes Interface
+- ``connected_sw_interface`` - Das gegenüberliegende Interface des verbundenen Switches
 
 Switch_VLAN
 ^^^^^^^^^^^
 
 Die Switch_VLAN-Tabelle gibt an welche VLANs auf welchen Switches vorhanden ist.
 
-- ``fk_switch_id`` - ID von dem Switch auf dem das VLAN vorhanden ist; Pointed auf Switch(pk_switch_id)
+- ``fk_switch_id`` - ID von dem Switch auf dem das VLAN vorhanden ist; Pointed auf Switch(``pk_switch_id``)
 
-- ``fk_vlan_id`` - VLAN welches auf dem Switch vorhanden ist; Pointed auf VLAN(pk_vlan_id)
+- ``fk_vlan_id`` - VLAN welches auf dem Switch vorhanden ist; Pointed auf VLAN(``pk_vlan_id``)
 
 Switch
 ^^^^^^
@@ -151,32 +151,32 @@ VLAN(pk_vlan_id)
 
 - ``AUTOINCREMENT``
 
-- ``ON DELETE CASCADE`` → Trunking(fk_allowed_vlan_id)
+- ``ON DELETE CASCADE`` → Trunking(``fk_allowed_vlan_id``)
 
-- ``ON DELETE CASCADE`` → Switch_VLAN(fk_vlan_id)
+- ``ON DELETE CASCADE`` → Switch_VLAN(``fk_vlan_id``)
 
-- ``ON DELETE SET NULL`` → Interface(fk_access_vlan)
+- ``ON DELETE SET NULL`` → Interface(``fk_access_vlan``)
 
-- ``ON DELETE SET NULL`` → Interface(fk_voice_vlan_id)
+- ``ON DELETE SET NULL`` → Interface(``fk_voice_vlan_id``)
 
 Switch(pk_switch_id)
 ^^^^^^^^^^^^^^^^^^^^
 
 - ``AUTOINCREMENT``
 
-- ``ON DELETE CASCADE`` → Switch_Vlan(fk_switch_id)
+- ``ON DELETE CASCADE`` → Switch_Vlan(``fk_switch_id``)
 
-- ``ON DELETE CASCADE`` → Interface(fk_switch_id)
+- ``ON DELETE CASCADE`` → Interface(``fk_switch_id``)
 
 Deivce(pk_device_id)
 ^^^^^^^^^^^^^^^^^^^^
 
 - ``AUTOINCREMENT``
 
-- ``ON DELETE SET NULL`` → Interface(fk_device_id)
+- ``ON DELETE SET NULL`` → Interface(``fk_device_id``)
 
 Interface(pk_interface_id)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 - ``AUTOINCREMENT``
 
-- ``ON DELETE CASCADE`` → Trunking(fk_interface_id)
+- ``ON DELETE CASCADE`` → Trunking(``fk_interface_id``)
