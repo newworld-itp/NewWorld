@@ -7,10 +7,10 @@ Parse
 
 Die Methoden in ``config_parser.db`` werden von NewWorld importiert. Sie lesen die angegeben Dateien ein und wandeln diese in ``dictionaries`` um.
 
-parse_vlan
+parse_vlan()
 `````````````````````````````
 
-parse_vlan nimmt eine JSON File als input und wandelt diesen in ein dictionary im Format ``{VLAN_ID: 'VLAN_NAME', ...}`` um.
+``parse_vlan()`` nimmt eine JSON File als input und wandelt diesen in ein dictionary im Format ``{VLAN_ID: 'VLAN_NAME', ...}`` um.
 
 filename: ``vlan-data.json``
 
@@ -28,43 +28,29 @@ Input file
             "mtu": 1500
         },
         {
-            "name": "VLAN0020",
+            "name": "VLAN20",
             "vlan_id": 20,
             "state": "active",
             "shutdown": "disabled",
             "mtu": 1500
         },
         {
-            "name": "vlan30test",
+            "name": "VLAN30",
             "vlan_id": 30,
             "state": "active",
             "shutdown": "disabled",
             "mtu": 1500
         },
         {
-            "name": "ARTHUR",
-            "vlan_id": 42,
+            "name": "VLAN40",
+            "vlan_id": 40,
             "state": "active",
             "shutdown": "disabled",
             "mtu": 1500
         },
         {
-            "name": "VLAN0085",
-            "vlan_id": 85,
-            "state": "active",
-            "shutdown": "disabled",
-            "mtu": 1500
-        },
-        {
-            "name": "Arthur",
-            "vlan_id": 260,
-            "state": "active",
-            "shutdown": "disabled",
-            "mtu": 1500
-        },
-        {
-            "name": "marc",
-            "vlan_id": 261,
+            "name": "Management",
+            "vlan_id": 99,
             "state": "active",
             "shutdown": "disabled",
             "mtu": 1500
