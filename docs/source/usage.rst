@@ -7,7 +7,7 @@ Usage
 -p, --path
 `````````````````````````````
 
-NewWorld arbeitet mit mehreren Textdateien. Damit man nicht jede von diesen Dateien einzeln angeben muss, haben wir uns dafür entschieden die Dateien in einer Ordnerstruktur abzulegen.
+NewWorld arbeitet mit mehreren Textdateien. Damit man nicht jede von diesen Dateien einzeln angeben muss, haben wir uns dafür entschieden, die Dateien in einer Ordnerstruktur abzulegen.
 
 .. code-block:: console
 
