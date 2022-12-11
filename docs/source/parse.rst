@@ -105,10 +105,10 @@ path_to_vlan_json_file: the path to the vlan-data.json file
         return erg
 
 
-parse_interface_descriptions
+parse_interface_descriptions()
 `````````````````````````````
 
-parse_interface_descriptions nimmt den ``Cisco "show interface descriptions"`` Output als input und wandelt diesen in ein dictionary im Format ``{INT_NAME: ('STATUS', 'PROTOCOL', 'DESCRIPTION'), ...}`` um.
+``parse_interface_descriptions()`` nimmt den ``Cisco "show interface descriptions"`` Output als input und wandelt diesen in ein dictionary im Format ``{INT_NAME: ('STATUS', 'PROTOCOL', 'DESCRIPTION'), ...}`` um.
 
 filename: ``interface-descriptions.txt``
 
@@ -158,9 +158,9 @@ Method
         return erg
 
 
-parse_interfaces
+parse_interfaces()
 `````````````````````````````
-parse_interfaces nimmt eine JSON File als input und wandelt diesen in ein dictionary im Format ``{INT_NAME: ('ACCESS_VLAN', 'VOICE_VLAN', [ALLOWED_TRUNK_VLAN_1,ALLOWED_TRUNK_VLAN_2,...,ALLOWED_TRUNK_VLAN_N]), ...}`` um.
+``parse_interfaces()`` nimmt eine JSON File als input und wandelt diesen in ein dictionary im Format ``{INT_NAME: ('ACCESS_VLAN', 'VOICE_VLAN', [ALLOWED_TRUNK_VLAN_1,ALLOWED_TRUNK_VLAN_2,...,ALLOWED_TRUNK_VLAN_N]), ...}`` um.
 
 filename: ``l2-interfacess.txt``
 
@@ -261,10 +261,10 @@ Method
         return erg
 
 
-parse_port_security
+parse_port_security()
 `````````````````````````````
 
-parse_port_security nimmt den ``Cisco "show port-security address"`` Output als input und wandelt diesen in ein dictionary im Format ``{INT_NAME: [VLAN, MAC-ADDRESS], ...}`` um.
+``parse_port_security()`` nimmt den ``Cisco "show port-security address"`` Output als input und wandelt diesen in ein dictionary im Format ``{INT_NAME: [VLAN, MAC-ADDRESS], ...}`` um.
 
 filename: ``show_port-security_address.txt``
 
@@ -307,10 +307,10 @@ Method
         return erg
         
 
-parse_cdp
+parse_cdp()
 `````````````````````````````
 
-parse_cdp nimmt den ``Cisco "show cdp neighbors"`` Output als input und wandelt diesen in ein dictionary im Format ``{INT_NAME: [VLAN, MAC-ADDRESS], ...}`` um.
+``parse_cdp()`` nimmt den ``Cisco "show cdp neighbors"`` Output als input und wandelt diesen in ein dictionary im Format ``{INT_NAME: [VLAN, MAC-ADDRESS], ...}`` um.
 
 filename: ``show_cdp_neighbors.txt``
 
