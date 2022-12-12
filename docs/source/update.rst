@@ -6,7 +6,7 @@ Update
 in db_calls.py
 
 
-insert_switch
+insert_switch()
 `````````````````````````````
 
 .. code-block:: python
@@ -24,7 +24,7 @@ insert_switch
 
 ``sql_query`` ist das SQL-Statement welches ausgeführt wird. Hierbei wollen wir einen Switch mittels des ``hostname`` Parameters in die Datenbank schreiben. Ein Entry besteht somit aus der Switch-ID sowie dem jeweiligem Hostname. Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt.
 
-insert_vlan
+insert_vlan()
 `````````````````````````````
 
 .. code-block:: python
@@ -43,7 +43,7 @@ insert_vlan
 
 ``sql_query`` ist das SQL-Statement welches ausgeführt wird. Hierbei wollen wir alle VLANs mittels dem zuvor geparsten ``vlans_from_file`` in die Datenbank schreiben. Ein Entry besteht somit aus der VLAN-ID sowie dem jeweiligem Namen. Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt.
 
-insert_interfaces
+insert_interfaces()
 `````````````````````````````
 
 .. code-block:: python
@@ -100,7 +100,7 @@ Zuletzt wird aus dem ``cdp_from_file`` Dictionary, der an dem Interface verbunde
 
 Ein Entry besteht somit aus der Interface-ID, der Switch-ID, dem Access-VLAN, dem Voice-VLAN, einem verbundenen Edge-Device, dem Interface-Identifier, der Interface Description, dem Port-Security Zustand, der Allowed MAC-Adresse, dem Port Link Status, dem Port Protocol Status, dem an dem Interface verbundenen Switch sowie das Interface eben dieses Switches. Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt.
 
-insert_trunk
+insert_trunk()
 `````````````````````````````
 
 .. code-block:: python
@@ -125,7 +125,7 @@ insert_trunk
 
 ``sql_query`` ist das SQL-Statement welches ausgeführt wird. Hierbei wollen wir die Trunking Information der Interfaces als Zwischentabelle, mithilfe des ``hostname`` Parameters und dem zuvor geparsten ``l2_interfaces_from_file`` Dictionary in die Datenbank schreiben. Ein Entry besteht somit aus der Interface-ID sowie der VLAN-ID des VLANs, welches auf dem Interface erlaubt ist. Aus dem ``l2_interfaces_from_file`` Dictionary werden die Trunk Interfaces für die das Attribut ``fk_interface_id`` ausgelesen. Das Statement wird in ``db_cursor.execute(sql_query)`` ausgeführt.
 
-insert_switch_vlan
+insert_switch_vlan()
 `````````````````````````````
 
 .. code-block:: python
