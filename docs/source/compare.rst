@@ -5,7 +5,7 @@ Compare
 
 in db_calls.py
 
-find_switch_id
+find_switch_id()
 `````````````````````````````
 
 .. code-block:: python
@@ -34,7 +34,7 @@ Zuletzt wird dann die Switch-ID, welche sich in ``rows`` befindet
 mit einem ``return`` weitergegeben.
 
         
-compare_vlans
+compare_vlans()
 `````````````````````````````
 
 .. code-block:: python
@@ -77,7 +77,7 @@ Diese VLANs werden dann mit denen aus der File ``vlans_from_file`` verglichen.
 
 Die Unterschiede werden dann ``errors`` gespeichert und zurückgeben.
         
-compare_interfaces
+compare_interfaces()
 `````````````````````````````
 
 .. code-block:: python
@@ -147,7 +147,7 @@ Diese Interfaces(mit VLANs) werden dann mit denen aus der File ``interfaces_from
 
 Die Unterschiede werden dann ``errors`` gespeichert und zurückgeben.
     
-compare_port_security
+compare_port_security()
 `````````````````````````````
 
 .. code-block:: python
@@ -204,7 +204,7 @@ Diese Mac-Addressen werden dann mit denen aus der File ``compare_port_security``
 
 Die Unterschiede werden dann ``errors`` gespeichert und zurückgeben.
     
-compare_interface_descriptions
+compare_interface_descriptions()
 `````````````````````````````
 
 .. code-block:: python
@@ -261,7 +261,7 @@ Diese Interface Stati und die Interface Descriptions werden dann mit denen aus d
 Die Unterschiede werden dann ``errors`` gespeichert und zurückgeben.
     
     
-compare_cdp
+compare_cdp()
 `````````````````````````````
 
 .. code-block:: python
